@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lines_background_dark"
+    android:background="@drawable/lines_background"
     tools:context=".HostOrJoinRoomActivity">
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Create or Smth"
+        android:layout_marginTop="340dp"
+        android:background="#525b76"
+        android:padding="10dp"
+        android:text="ΦΤΙΑΞΕ ΕΝΑ ΔΩΜΑΤΙΟ"
+        android:textColor="#FEFFF2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Join or Smth"
+        android:text="ΜΠΕΣ ΣΕ ΕΝΑ ΔΩΜΑΤΙΟ"
         app:layout_constraintEnd_toEndOf="@+id/button1"
         app:layout_constraintStart_toStartOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/button1" />
