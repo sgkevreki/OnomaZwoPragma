@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.ViewTreeObserver
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Button
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.plattysoft.leonids.ParticleSystem
@@ -99,7 +100,8 @@ class MainActivity : AppCompatActivity() {
                         this@MainActivity,
                         500,
                         floating_item,
-                        20000
+                        30000,
+                        R.id.frame_anim_background
                     )
 //                        .setSpeedModuleAndAngleRange(0.02f, 0.1f, 0, 180)
                         .setSpeedRange(0.02f, 0.1f)
