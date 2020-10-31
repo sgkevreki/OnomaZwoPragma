@@ -5,14 +5,10 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.ViewTreeObserver
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Button
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.plattysoft.leonids.ParticleSystem
-import kotlin.math.pow
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,26 +28,9 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-//        val viewTreeObserver: ViewTreeObserver = rootView.viewTreeObserver
-//        if (viewTreeObserver.isAlive) {
-//            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-//                override fun onGlobalLayout() {
-//                    rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-//
-//                    var particleSystem = ParticleSystem(this@MainActivity, 500, R.drawable.compass, 20000)
-//                        .setSpeedRange(0.02f, 0.1f)
-//                        .setRotationSpeed(40F)
-//                        .setScaleRange(0.3f, 0.4f)
-//                        .emit((0..200).random(), (0..200).random(), 1)
-//
-//
-//                }
-//            })
-//        }
-
         // ------------------------------------------------------------------------------------------------------------------
-        // When the app starts, we create a thread that is responsible for updating the main currency *view* every X seconds.
-        // This thread is posting changes for the UI thread.
+        // This thread is responsible for the background particle system.
+        // It creates an emitter every 1 second that spits out 1 drawable and then destroys it.
         // PROCEED WITH CAUTION WHEN CHANGING THIS PART OF THE CODE
         // ------------------------------------------------------------------------------------------------------------------
         val rootView = findViewById<ConstraintLayout>(R.id.root_constraint_layout)
@@ -80,18 +59,18 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                var floating_item: Drawable = resources.getDrawable(R.drawable.compass)
+                var floatingItem: Drawable = resources.getDrawable(R.drawable.compass)
                 when ((0..9).random()) {
-                    0 -> floating_item = resources.getDrawable(R.drawable.compass)
-                    1 -> floating_item = resources.getDrawable(R.drawable.eraser)
-                    2 -> floating_item = resources.getDrawable(R.drawable.highlighter)
-                    3 -> floating_item = resources.getDrawable(R.drawable.paper_clip)
-                    4 -> floating_item = resources.getDrawable(R.drawable.pencil)
-                    5 -> floating_item = resources.getDrawable(R.drawable.pens)
-                    6 -> floating_item = resources.getDrawable(R.drawable.protractor)
-                    7 -> floating_item = resources.getDrawable(R.drawable.ruler)
-                    8 -> floating_item = resources.getDrawable(R.drawable.send)
-                    9 -> floating_item = resources.getDrawable(R.drawable.sharpener)
+                    0 -> floatingItem = resources.getDrawable(R.drawable.compass)
+                    1 -> floatingItem = resources.getDrawable(R.drawable.eraser)
+                    2 -> floatingItem = resources.getDrawable(R.drawable.highlighter)
+                    3 -> floatingItem = resources.getDrawable(R.drawable.paper_clip)
+                    4 -> floatingItem = resources.getDrawable(R.drawable.pencil)
+                    5 -> floatingItem = resources.getDrawable(R.drawable.pens)
+                    6 -> floatingItem = resources.getDrawable(R.drawable.protractor)
+                    7 -> floatingItem = resources.getDrawable(R.drawable.ruler)
+                    8 -> floatingItem = resources.getDrawable(R.drawable.send)
+                    9 -> floatingItem = resources.getDrawable(R.drawable.sharpener)
                 }
 
                 rootView.post {
@@ -99,11 +78,10 @@ class MainActivity : AppCompatActivity() {
                     var particleSystem = ParticleSystem(
                         this@MainActivity,
                         500,
-                        floating_item,
+                        floatingItem,
                         30000,
                         R.id.frame_anim_background
                     )
-//                        .setSpeedModuleAndAngleRange(0.02f, 0.1f, 0, 180)
                         .setSpeedRange(0.02f, 0.1f)
                         .setRotationSpeed(40F)
                         .setScaleRange(0.2f, 0.2f)
