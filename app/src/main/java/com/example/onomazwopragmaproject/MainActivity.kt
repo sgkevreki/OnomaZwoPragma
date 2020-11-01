@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.plattysoft.leonids.ParticleSystem
@@ -20,16 +21,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var button1 = findViewById<Button>(R.id.button1)
+        var button1 = findViewById<ImageButton>(R.id.imageButton)
         button1.setOnClickListener {
             var intent: Intent = Intent(this, HostOrJoinRoomActivity::class.java)
             startActivity(intent)
         }
 
-        var button2 = findViewById<Button>(R.id.button2)
-        button2.setOnClickListener {
-            // ...
-        }
 
 
 //        val viewTreeObserver: ViewTreeObserver = rootView.viewTreeObserver
@@ -55,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         // PROCEED WITH CAUTION WHEN CHANGING THIS PART OF THE CODE
         // ------------------------------------------------------------------------------------------------------------------
         val rootView = findViewById<ConstraintLayout>(R.id.root_constraint_layout)
-        val mainDelay : Long = 1000
+        val mainDelay : Long = 300
         val handler = Handler()
         val runnable: Runnable = object : Runnable {
             override fun run() {
@@ -81,17 +78,16 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 var floating_item: Drawable = resources.getDrawable(R.drawable.compass)
-                when ((0..9).random()) {
+                when ((0..8).random()) {
                     0 -> floating_item = resources.getDrawable(R.drawable.compass)
                     1 -> floating_item = resources.getDrawable(R.drawable.eraser)
                     2 -> floating_item = resources.getDrawable(R.drawable.highlighter)
-                    3 -> floating_item = resources.getDrawable(R.drawable.paper_clip)
-                    4 -> floating_item = resources.getDrawable(R.drawable.pencil)
-                    5 -> floating_item = resources.getDrawable(R.drawable.pens)
-                    6 -> floating_item = resources.getDrawable(R.drawable.protractor)
-                    7 -> floating_item = resources.getDrawable(R.drawable.ruler)
-                    8 -> floating_item = resources.getDrawable(R.drawable.send)
-                    9 -> floating_item = resources.getDrawable(R.drawable.sharpener)
+                    3 -> floating_item = resources.getDrawable(R.drawable.pencil)
+                    4 -> floating_item = resources.getDrawable(R.drawable.pens)
+                    5 -> floating_item = resources.getDrawable(R.drawable.protractor)
+                    6 -> floating_item = resources.getDrawable(R.drawable.ruler)
+                    7 -> floating_item = resources.getDrawable(R.drawable.send)
+                    8 -> floating_item = resources.getDrawable(R.drawable.sharpener)
                 }
 
                 rootView.post {
