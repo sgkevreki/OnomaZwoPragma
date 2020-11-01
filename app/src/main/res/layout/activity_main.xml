@@ -15,7 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"></FrameLayout>
+        tools:layout_editor_absoluteY="0dp">
+
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/imageView"
@@ -57,20 +60,16 @@
         app:layout_constraintTop_toTopOf="@+id/imageButton" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/imageButton8"
         android:layout_width="230dp"
         android:layout_height="90dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toStartOf="@+id/imageButton"
         app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        app:srcCompat="@drawable/blue_button" />
+        app:srcCompat="@drawable/newtestbutton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
