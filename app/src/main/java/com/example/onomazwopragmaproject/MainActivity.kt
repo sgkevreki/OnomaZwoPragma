@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var button1 = findViewById<ImageButton>(R.id.imageButton)
+        var button1 = findViewById<ImageButton>(R.id.paikse_button)
         button1.setOnClickListener {
             var intent: Intent = Intent(this, HostOrJoinRoomActivity::class.java)
             startActivity(intent)
