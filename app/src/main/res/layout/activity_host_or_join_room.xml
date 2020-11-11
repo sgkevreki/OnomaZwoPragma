@@ -4,45 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:background="@drawable/lines_background"
     tools:context=".HostOrJoinRoomActivity">
 
-    <Button
-        android:id="@+id/button_host"
-        android:layout_width="249dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginLeft="106dp"
-        android:layout_marginTop="250dp"
-        android:layout_marginEnd="107dp"
-        android:layout_marginRight="107dp"
-        android:layout_marginBottom="380dp"
-        android:text="ΦΤΙΑΞΕ ΕΝΑ ΔΩΜΑΤΙΟ"
-        android:textColor="#fefff2"
-        app:cornerRadius="10dp"
+    <ImageButton
+        android:id="@+id/host_room"
+        android:layout_width="340dp"
+        android:layout_height="259dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.089"
+        app:srcCompat="@drawable/host_room" />
 
-    <Button
-        android:id="@+id/button_join"
-        android:layout_width="268dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginLeft="106dp"
-        android:layout_marginEnd="107dp"
-        android:layout_marginRight="107dp"
-        android:text="ΜΠΕΣ ΣΕ ΕΝΑ ΔΩΜΑΤΙΟ"
-        android:textColor="#fefff2"
-        app:cornerRadius="10dp"
+    <ImageButton
+        android:id="@+id/join_room"
+        android:layout_width="349dp"
+        android:layout_height="352dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.591" />
-
-
+        app:layout_constraintTop_toTopOf="@id/host_room"
+        app:layout_constraintVertical_bias="0.982"
+        app:srcCompat="@drawable/join_room" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/lines_background"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".MainActivity">
 
 
@@ -16,7 +17,6 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
-
 
     </FrameLayout>
 
@@ -63,27 +63,39 @@
         app:srcCompat="@drawable/eksodos_button" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="66dp"
-        android:layout_height="97dp"
+        android:id="@+id/music_button"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/music3" />
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="66dp"
-        android:layout_height="97dp"
+        android:id="@+id/info_button"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:layout_constraintHorizontal_bias="0.953"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/music_button"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/info_button" />
+
+    <ImageView
+        android:id="@+id/rate_button"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/info_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.998"
         app:srcCompat="@drawable/rate" />
 
 
