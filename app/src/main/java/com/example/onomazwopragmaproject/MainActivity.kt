@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import com.plattysoft.leonids.ParticleSystem
 import kotlin.math.pow
 
@@ -28,30 +29,30 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        val rootView = findViewById<ConstraintLayout>(R.id.root_constraint_layout)
 
-//        val viewTreeObserver: ViewTreeObserver = rootView.viewTreeObserver
-//        if (viewTreeObserver.isAlive) {
-//            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-//                override fun onGlobalLayout() {
-//                    rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-//
-//                    var particleSystem = ParticleSystem(this@MainActivity, 500, R.drawable.compass, 20000)
-//                        .setSpeedRange(0.02f, 0.1f)
-//                        .setRotationSpeed(40F)
-//                        .setScaleRange(0.3f, 0.4f)
-//                        .emit((0..200).random(), (0..200).random(), 1)
-//
-//
-//                }
-//            })
-//        }
+        val viewTreeObserver: ViewTreeObserver = rootView.viewTreeObserver
+        if (viewTreeObserver.isAlive) {
+            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                    var particleSystem = ParticleSystem(this@MainActivity, 500, R.drawable.compass, 20000)
+                        .setSpeedRange(0.02f, 0.1f)
+                        .setRotationSpeed(40F)
+                        .setScaleRange(0.3f, 0.4f)
+                        .emit((0..200).random(), (0..200).random(), 1)
+
+
+                }
+            })
+        }
 
         // ------------------------------------------------------------------------------------------------------------------
         // When the app starts, we create a thread that is responsible for updating the main currency *view* every X seconds.
         // This thread is posting changes for the UI thread.
         // PROCEED WITH CAUTION WHEN CHANGING THIS PART OF THE CODE
         // ------------------------------------------------------------------------------------------------------------------
-        val rootView = findViewById<ConstraintLayout>(R.id.root_constraint_layout)
         val mainDelay : Long = 300
         val handler = Handler()
         val runnable: Runnable = object : Runnable {
@@ -77,7 +78,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                var floating_item: Drawable = resources.getDrawable(R.drawable.compass)
+
+                var floating_item: Drawable =
+                    resources.getDrawable(R.drawable.compass)
+//                    ResourcesCompat.getDrawable(resources, R.drawable.compass, null)!!
                 when ((0..8).random()) {
                     0 -> floating_item = resources.getDrawable(R.drawable.compass)
                     1 -> floating_item = resources.getDrawable(R.drawable.eraser)
@@ -91,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 rootView.post {
-                    Log.d("xy", "$x $y")
+//                    Log.d("xy", "$x $y")
                     var particleSystem = ParticleSystem(
                         this@MainActivity,
                         500,
@@ -103,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                         .setSpeedRange(0.02f, 0.1f)
                         .setRotationSpeed(40F)
                         .setScaleRange(0.2f, 0.2f)
-                        .emit(x, y, 1, 1000)
+                        .emit(x, y, 1, 700)
                 }
                 handler.postDelayed(this, mainDelay)
             }
