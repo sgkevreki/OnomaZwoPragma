@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.common.util.Strings
+
 
 class GameRecyclerviewAdapter(private val categoriesList: List<String>): RecyclerView.Adapter<GameRecyclerviewAdapter.MyViewHolder>(){
     // STOP. GO WATCH THIS: https://www.youtube.com/watch?v=17NbUcEts9c. NOW GO

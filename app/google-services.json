@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "952918890998",
+    "firebase_url": "https://onomazwopragmaproject.firebaseio.com",
+    "project_id": "onomazwopragmaproject",
+    "storage_bucket": "onomazwopragmaproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952918890998:android:ad8a64c6dadd8d50504fd7",
+        "android_client_info": {
+          "package_name": "com.example.onomazwopragmaproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952918890998-8998qvb113d3pj72nbf4p6itt29u4bc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7GRXCH_8hDhHmMHjS-ZLbi77e1TDv5-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952918890998-8998qvb113d3pj72nbf4p6itt29u4bc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
