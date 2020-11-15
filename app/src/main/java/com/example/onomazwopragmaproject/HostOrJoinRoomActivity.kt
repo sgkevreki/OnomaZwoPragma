@@ -49,7 +49,7 @@ class HostOrJoinRoomActivity : AppCompatActivity() {
         }
 
         join_button.setOnClickListener{
-            var intent: Intent = Intent(this, GameActivity::class.java)
+            var intent: Intent = Intent(this, JoinRoomActivity::class.java)
             startActivity(intent)
         }
 

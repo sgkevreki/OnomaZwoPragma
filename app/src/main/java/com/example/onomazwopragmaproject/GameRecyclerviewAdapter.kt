@@ -4,6 +4,7 @@ import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -22,12 +23,14 @@ class GameRecyclerviewAdapter(private val categoriesList: List<String>): Recycle
         // ...and here we declare the views inside that layout...
         internal var category_image: ImageView
         internal var category_name: TextView
+        internal var category_user_input: EditText
 
         // ...and associate them with the correct views!
         // init { ... } is one of many ways to write constructors in Kotlin.
         init {
             category_image = itemView.findViewById(R.id.category_image)
             category_name = itemView.findViewById(R.id.category_name)
+            category_user_input = itemView.findViewById(R.id.category_user_input)
         }
 
     }
@@ -44,6 +47,7 @@ class GameRecyclerviewAdapter(private val categoriesList: List<String>): Recycle
     // Note that to access any view you go through the holder reference, a reference to the MyViewHolder class we wrote above! (This is where it is used)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.category_name.text = categoriesList[position]
+        holder.category_user_input.hint = categoriesList[position]
         // holder.category_image = ...
         // I don't have anything to set on the image at the moment, but this is where it would be set.
     }

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/join_host"
     android:padding="10dp"
-    android:background="@drawable/lines_background"
     tools:context=".HostOrJoinRoomActivity">
 
     <ImageButton
         android:id="@+id/host_room"
-        android:layout_width="340dp"
-        android:layout_height="259dp"
+        android:layout_width="303dp"
+        android:layout_height="228dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,16 +24,16 @@
 
     <ImageButton
         android:id="@+id/join_room"
-        android:layout_width="349dp"
-        android:layout_height="352dp"
+        android:layout_width="288dp"
+        android:layout_height="279dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/host_room"
-        app:layout_constraintVertical_bias="0.982"
+        app:layout_constraintVertical_bias="0.789"
         app:srcCompat="@drawable/join_room" />
 
     <TextView

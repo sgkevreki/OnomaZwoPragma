@@ -26,9 +26,11 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         // Setting a few names in categories for testing
-        categories.add("proswpo")
-        categories.add("zwo")
-        categories.add("pragma")
+        categories.add("Πρόσωπο")
+        categories.add("Ζώο")
+        categories.add("Πράγμα")
+        categories.add("Φυτό")
+        categories.add("Μέρος")
 
         // Create the objects needed
         // Create a Linear Layout Manager
