@@ -3,11 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="22dp"
+    android:layout_marginTop="15dp"
+    app:cardCornerRadius="25dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/name_background"
+        android:backgroundTint="#80FFFFFF"
+        android:backgroundTintMode="src_over"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/category_image"
@@ -17,7 +24,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/highlighter" />
+            app:srcCompat="@drawable/name_image" />
 
         <TextView
             android:id="@+id/category_name"
@@ -28,8 +35,10 @@
             android:layout_marginTop="8dp"
             android:text="Category Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/category_image"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/category_user_input"
@@ -37,9 +46,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="Category Name"
-            android:textColor="@android:color/white"
+            android:inputType="textPersonName"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="@+id/category_name"
             app:layout_constraintTop_toBottomOf="@+id/category_name" />
 

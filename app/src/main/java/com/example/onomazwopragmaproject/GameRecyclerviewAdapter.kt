@@ -37,7 +37,7 @@ class GameRecyclerviewAdapter(private val categoriesList: List<String>): Recycle
 
     // Create new Views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val myView = LayoutInflater.from(parent.context).inflate(R.layout.card_for_category, parent, false) as CardView
+        val myView = LayoutInflater.from(parent.context).inflate(R.layout.card_category, parent, false) as CardView
         return MyViewHolder(myView)
     }
 
