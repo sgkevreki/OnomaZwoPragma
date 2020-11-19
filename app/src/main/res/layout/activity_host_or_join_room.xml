@@ -36,18 +36,18 @@
         app:layout_constraintVertical_bias="0.789"
         app:srcCompat="@drawable/join_room" />
 
-    <TextView
-        android:id="@+id/database_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="186dp"
-        android:layout_marginLeft="186dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginRight="157dp"
-        android:text="DATABASE TEST"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/join_room"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/host_room" />
+<!--    <TextView-->
+<!--        android:id="@+id/database_test"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="186dp"-->
+<!--        android:layout_marginLeft="186dp"-->
+<!--        android:layout_marginEnd="157dp"-->
+<!--        android:layout_marginRight="157dp"-->
+<!--        android:text="DATABASE TEST"-->
+<!--        android:textColor="@android:color/black"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/join_room"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/host_room" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
