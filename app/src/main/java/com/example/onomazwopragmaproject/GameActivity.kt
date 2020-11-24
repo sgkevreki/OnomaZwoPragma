@@ -1,7 +1,9 @@
 package com.example.onomazwopragmaproject
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -9,6 +11,8 @@ class GameActivity : AppCompatActivity() {
 
     // A list of categories names included in the current game (Proswpo, Pragma, Futo etc) as strings. One card in recyclerview for each category
     var categories: MutableList<String> = mutableListOf()
+    var categories_image: MutableList<Drawable> = mutableListOf()
+    var categories_background: MutableList<Drawable> = mutableListOf()
 
     // Initialize references to needed elements:
     // recyclerView -> The actual recyclerView object. You need one of these to show of a list of data.
@@ -26,15 +30,29 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         // Setting a few names in categories for testing
-        categories.add("proswpo")
-        categories.add("zwo")
-        categories.add("pragma")
+        categories.add("Πρόσωπο")
+        categories.add("Ζώο")
+        categories.add("Πράγμα")
+//        categories.add("Φυτό")
+//        categories.add("Μέρος")
+
+        //images
+
+        categories_image.add(resources.getDrawable(R.drawable.name_image))
+        categories_image.add(resources.getDrawable(R.drawable.animal_image))
+        categories_image.add(resources.getDrawable(R.drawable.thing_image))
+
+        //backgrounds
+        categories_background.add(resources.getDrawable(R.drawable.name_background))
+        categories_background.add(resources.getDrawable(R.drawable.animal_background))
+        categories_background.add(resources.getDrawable(R.drawable.thing_background))
+
 
         // Create the objects needed
         // Create a Linear Layout Manager
         recyclerViewLayoutManager = LinearLayoutManager(this)
         // And an instance of an Adapter (note that the 'categories' argument must be of the same type declared in the constructor of the GameRecyclerViewAdapter class (duh))
-        recyclerViewAdapter = GameRecyclerviewAdapter(categoriesList = categories)
+        recyclerViewAdapter = GameRecyclerviewAdapter(categoriesList = categories, categoriesList2 = categories_image, categoriesList3 = categories_background)
 
         // Associate firstly the recyclerview layout (R.id.recyclerview) with the object reference (private lateinit var recyclerView)
         recyclerView = findViewById<RecyclerView>(R.id.game_recyclerview)

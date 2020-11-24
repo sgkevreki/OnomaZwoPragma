@@ -9,8 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GameActivity"></activity>
-        <activity android:name=".HostOrJoinRoomActivity"></activity>
+        <activity
+            android:name=".HostRoomActivity"
+            android:label="@string/title_activity_host_room"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".JoinRoomActivity" />
+        <activity android:name=".GameActivity" />
+        <activity android:name=".HostOrJoinRoomActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
