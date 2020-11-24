@@ -43,7 +43,10 @@ class HostRoomActivity : AppCompatActivity() {
         })
 
         test_button.setOnClickListener {
-            myRef.setValue((0..10).random().toString())
+//            myRef.setValue((0..10).random().toString())
+            var roomId = database.getReference("ABDC")
+            roomId.child("members").child("memberID").setValue("HostPlayerIDHere!")
+            roomId.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")
         }
 
     }
