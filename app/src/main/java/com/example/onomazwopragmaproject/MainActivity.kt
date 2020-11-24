@@ -32,21 +32,21 @@ class MainActivity : AppCompatActivity() {
         val rootView = findViewById<ConstraintLayout>(R.id.root_constraint_layout)
 
         val viewTreeObserver: ViewTreeObserver = rootView.viewTreeObserver
-        if (viewTreeObserver.isAlive) {
-            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
-                    var particleSystem = ParticleSystem(this@MainActivity, 500, R.drawable.compass, 20000)
-                        .setSpeedRange(0.02f, 0.1f)
-                        .setRotationSpeed(40F)
-                        .setScaleRange(0.3f, 0.4f)
-                        .emit((0..200).random(), (0..200).random(), 1)
-
-
-                }
-            })
-        }
+//        if (viewTreeObserver.isAlive) {
+//            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+//                override fun onGlobalLayout() {
+//                    rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+//
+//                    var particleSystem = ParticleSystem(this@MainActivity, 500, R.drawable.compass, 20000)
+//                        .setSpeedRange(0.02f, 0.1f)
+//                        .setRotationSpeed(40F)
+//                        .setScaleRange(0.3f, 0.4f)
+//                        .emit((0..200).random(), (0..200).random(), 1)
+//
+//
+//                }
+//            })
+//        }
 
         // ------------------------------------------------------------------------------------------------------------------
         // When the app starts, we create a thread that is responsible for updating the main currency *view* every X seconds.
