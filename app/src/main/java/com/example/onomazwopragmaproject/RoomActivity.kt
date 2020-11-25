@@ -31,6 +31,9 @@ class RoomActivity : AppCompatActivity() {
         database.reference.child(roomId).child("members").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
+                // What type is value? (HashMap?)
+                Log.d("Room", "${value!!::class.simpleName}")
+                // How to iterate its contents?
                 Log.d("Room", "RoomActivity dataSnapshot.value is: $value")
             }
 

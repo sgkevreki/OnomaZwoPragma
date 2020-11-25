@@ -65,7 +65,7 @@ class HostRoomActivity : AppCompatActivity() {
         roomReference = database.getReference(roomId)
         // Add host to room members
         // TODO: Make sure there are no duplicate memberIDs!
-        roomReference.child("members").child("memberID").setValue("HostPlayerIDHere!")
+        roomReference.child("members").setValue("HostPlayerIDHere!")
         // TESTS
         roomReference.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")
 
