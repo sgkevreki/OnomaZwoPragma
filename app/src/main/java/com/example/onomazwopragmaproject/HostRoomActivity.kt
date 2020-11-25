@@ -1,28 +1,27 @@
 package com.example.onomazwopragmaproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
-import com.google.firebase.database.*
+import androidx.appcompat.app.AppCompatActivity
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.roomIdLength
+import com.example.onomazwopragmaproject.GlobalsActivity.Companion.roomIdSource
+import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
+import com.google.firebase.database.*
 
 class HostRoomActivity : AppCompatActivity() {
 
     private lateinit var roomId: String
     private lateinit var roomReference: DatabaseReference
-    private val database = FirebaseDatabase.getInstance()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host_room)
 
-        var test_button = findViewById<Button>(R.id.test_room)
+        val testButton = findViewById<Button>(R.id.test_room)
 
-        var database_test_text = findViewById<TextView>(R.id.database_test)
+        val databaseTestText = findViewById<TextView>(R.id.database_test)
 
         // TEST THE DATABASE
         val myRef = database.getReference("message")
@@ -36,7 +35,7 @@ class HostRoomActivity : AppCompatActivity() {
                 // whenever data at this location is updated.
                 val value = dataSnapshot.getValue(String::class.java)!!
                 Log.d("hostorjoin", "Value is: $value")
-                database_test_text.text = value
+                databaseTestText.text = value
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -45,19 +44,20 @@ class HostRoomActivity : AppCompatActivity() {
             }
         })
 
-        test_button.setOnClickListener {
-//            myRef.setValue((0..10).random().toString())
+        testButton.setOnClickListener {
             createRoom()
-
+            // and then go to RoomActivity
         }
 
     }
 
-    fun createRoom(){
-
-        roomId = "ABCD"
+    private fun createRoom(){
+        // Create random roomId
+        roomId = (1..roomIdLength).map { roomIdSource.random() }.joinToString("")
+        // Get a database reference from the point of the room and beyond (you don't need the upper layers from here!)
         roomReference = database.getReference(roomId)
         // Add host to room members
+        // TODO: Make sure there are no duplicate memberIDs!
         roomReference.child("members").child("memberID").setValue("HostPlayerIDHere!")
         // TESTS
         roomReference.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")

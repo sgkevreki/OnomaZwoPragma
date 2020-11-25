@@ -2,14 +2,8 @@ package com.example.onomazwopragmaproject
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class HostOrJoinRoomActivity : AppCompatActivity() {
@@ -18,8 +12,8 @@ class HostOrJoinRoomActivity : AppCompatActivity() {
         setContentView(R.layout.activity_host_or_join_room)
 
       //  var database_test_text = findViewById<TextView>(R.id.database_test)
-        var host_button = findViewById<ImageButton>(R.id.host_room)
-        var join_button = findViewById<ImageButton>(R.id.join_room)
+        val hostButton = findViewById<ImageButton>(R.id.host_room)
+        val joinButton = findViewById<ImageButton>(R.id.join_room)
 
 //
 //        // TEST THE DATABASE
@@ -48,13 +42,13 @@ class HostOrJoinRoomActivity : AppCompatActivity() {
 //            myRef.setValue((0..10).random().toString())
 //        }
 
-        host_button.setOnClickListener{
-            var intent: Intent = Intent(this, HostRoomActivity::class.java)
+        hostButton.setOnClickListener{
+            val intent = Intent(this, HostRoomActivity::class.java)
             startActivity(intent)
         }
 
-        join_button.setOnClickListener{
-            var intent: Intent = Intent(this, JoinRoomActivity::class.java)
+        joinButton.setOnClickListener{
+            val intent = Intent(this, JoinRoomActivity::class.java)
             startActivity(intent)
         }
 

@@ -1,7 +1,6 @@
 package com.example.onomazwopragmaproject
 
 import android.graphics.drawable.Drawable
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,18 +24,18 @@ class GameRecyclerviewAdapter(private val categoriesList: List<String>,
     // itemView is like a reference to the whole 'card_for_category' layout...
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         // ...and here we declare the views inside that layout...
-        internal var category_image: ImageView
-        internal var category_name: TextView
-        internal var category_user_input: EditText
-        internal lateinit var category_background: ConstraintLayout
+        internal var categoryImage: ImageView
+        internal var categoryName: TextView
+        internal var categoryUserInput: EditText
+        internal var categoryBackground: ConstraintLayout
 
         // ...and associate them with the correct views!
         // init { ... } is one of many ways to write constructors in Kotlin.
         init {
-            category_image = itemView.findViewById(R.id.category_image)
-            category_name = itemView.findViewById(R.id.category_name)
-            category_user_input = itemView.findViewById(R.id.category_user_input)
-            category_background = itemView.findViewById(R.id.layout)
+            categoryImage = itemView.findViewById(R.id.category_image)
+            categoryName = itemView.findViewById(R.id.category_name)
+            categoryUserInput = itemView.findViewById(R.id.category_user_input)
+            categoryBackground = itemView.findViewById(R.id.layout)
 
         }
 
@@ -53,10 +52,10 @@ class GameRecyclerviewAdapter(private val categoriesList: List<String>,
     // From the position argument we know for which item in the list we are talking about and can use it to set correct data as follows.
     // Note that to access any view you go through the holder reference, a reference to the MyViewHolder class we wrote above! (This is where it is used)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.category_name.text = categoriesList[position]
-        holder.category_user_input.hint = categoriesList[position]
-        holder.category_image.setImageDrawable(categoriesList2[position])
-        holder.category_background.background = categoriesList3[position]
+        holder.categoryName.text = categoriesList[position]
+        holder.categoryUserInput.hint = categoriesList[position]
+        holder.categoryImage.setImageDrawable(categoriesList2[position])
+        holder.categoryBackground.background = categoriesList3[position]
 
     }
 

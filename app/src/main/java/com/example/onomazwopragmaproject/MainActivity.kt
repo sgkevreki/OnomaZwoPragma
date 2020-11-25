@@ -1,20 +1,14 @@
 package com.example.onomazwopragmaproject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.view.ViewTreeObserver
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.ResourcesCompat
 import com.plattysoft.leonids.ParticleSystem
-import kotlin.math.pow
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,31 +16,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var button1 = findViewById<ImageButton>(R.id.paikse_button)
+        val button1 = findViewById<ImageButton>(R.id.paikse_button)
         button1.setOnClickListener {
-            var intent: Intent = Intent(this, HostOrJoinRoomActivity::class.java)
+            val intent = Intent(this, HostOrJoinRoomActivity::class.java)
             startActivity(intent)
         }
 
 
         val rootView = findViewById<ConstraintLayout>(R.id.root_constraint_layout)
-
-        val viewTreeObserver: ViewTreeObserver = rootView.viewTreeObserver
-//        if (viewTreeObserver.isAlive) {
-//            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-//                override fun onGlobalLayout() {
-//                    rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-//
-//                    var particleSystem = ParticleSystem(this@MainActivity, 500, R.drawable.compass, 20000)
-//                        .setSpeedRange(0.02f, 0.1f)
-//                        .setRotationSpeed(40F)
-//                        .setScaleRange(0.3f, 0.4f)
-//                        .emit((0..200).random(), (0..200).random(), 1)
-//
-//
-//                }
-//            })
-//        }
 
         // ------------------------------------------------------------------------------------------------------------------
         // When the app starts, we create a thread that is responsible for updating the main currency *view* every X seconds.
@@ -56,9 +33,10 @@ class MainActivity : AppCompatActivity() {
         val mainDelay : Long = 300
         val handler = Handler()
         val runnable: Runnable = object : Runnable {
+            @SuppressLint("UseCompatLoadingForDrawables")
             override fun run() {
-                var x: Int = 0
-                var y: Int = 0
+                var x = 0
+                var y = 0
                 when ((0..3).random()) {
                     0 -> {
                         x = -40
@@ -79,19 +57,19 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-                var floating_item: Drawable =
+                var floatingItem: Drawable =
                     resources.getDrawable(R.drawable.compass)
 //                    ResourcesCompat.getDrawable(resources, R.drawable.compass, null)!!
                 when ((0..8).random()) {
-                    0 -> floating_item = resources.getDrawable(R.drawable.compass)
-                    1 -> floating_item = resources.getDrawable(R.drawable.eraser)
-                    2 -> floating_item = resources.getDrawable(R.drawable.highlighter)
-                    3 -> floating_item = resources.getDrawable(R.drawable.pencil)
-                    4 -> floating_item = resources.getDrawable(R.drawable.pens)
-                    5 -> floating_item = resources.getDrawable(R.drawable.protractor)
-                    6 -> floating_item = resources.getDrawable(R.drawable.ruler)
-                    7 -> floating_item = resources.getDrawable(R.drawable.send)
-                    8 -> floating_item = resources.getDrawable(R.drawable.sharpener)
+                    0 -> floatingItem = resources.getDrawable(R.drawable.compass)
+                    1 -> floatingItem = resources.getDrawable(R.drawable.eraser)
+                    2 -> floatingItem = resources.getDrawable(R.drawable.highlighter)
+                    3 -> floatingItem = resources.getDrawable(R.drawable.pencil)
+                    4 -> floatingItem = resources.getDrawable(R.drawable.pens)
+                    5 -> floatingItem = resources.getDrawable(R.drawable.protractor)
+                    6 -> floatingItem = resources.getDrawable(R.drawable.ruler)
+                    7 -> floatingItem = resources.getDrawable(R.drawable.send)
+                    8 -> floatingItem = resources.getDrawable(R.drawable.sharpener)
                 }
 
                 rootView.post {
@@ -99,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     var particleSystem = ParticleSystem(
                         this@MainActivity,
                         500,
-                        floating_item,
+                        floatingItem,
                         30000,
                         R.id.frame_anim_background
                     )
