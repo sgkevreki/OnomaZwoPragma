@@ -1,5 +1,6 @@
 package com.example.onomazwopragmaproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -47,12 +48,18 @@ class HostRoomActivity : AppCompatActivity() {
         testButton.setOnClickListener {
             createRoom()
             // and then go to RoomActivity
+            Log.d("Host", "Host test output")
+            val intent = Intent(this, RoomActivity::class.java)
+            intent.putExtra("EXTRA_ROOM_ID", roomId)
+            Log.d("Host", "roomId: $roomId")
+            startActivity(intent)
         }
 
     }
 
     private fun createRoom(){
         // Create random roomId
+        // TODO: Make sure there are no duplicate roomIDs!
         roomId = (1..roomIdLength).map { roomIdSource.random() }.joinToString("")
         // Get a database reference from the point of the room and beyond (you don't need the upper layers from here!)
         roomReference = database.getReference(roomId)

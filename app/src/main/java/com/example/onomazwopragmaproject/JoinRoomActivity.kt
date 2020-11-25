@@ -22,17 +22,20 @@ class JoinRoomActivity : AppCompatActivity() {
 
         val playButton = findViewById<ImageButton>(R.id.playButton)
         playButton.setOnClickListener {
-//            var intent: Intent = Intent(this, GameActivity::class.java)
-//            startActivity(intent)
-                // Let's create a listener on the Room level so everytime anything that is a child
-                // of the Room layer changes, we get notified.
-                // We handle the changes of everything inside this one adapter
 
-                val roomReference = database.reference.child(roomIdInput.toString())
+            /*
+            var intent: Intent = Intent(this, GameActivity::class.java)
+            startActivity(intent)
+            Let's create a listener on the Room level so everytime anything that is a child of the Room layer changes, we get notified.
+            We handle the changes of everything inside this one adapter
+            */
+            val roomReference = database.reference.child(roomIdInput.toString())
                 roomReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
+                    /*
+                    This method is called once with the initial value and again
+                    whenever data at this location is updated.
+                    */
                     val value = dataSnapshot.value
                     Log.d("Setting", "Setting is: $value")
                 }

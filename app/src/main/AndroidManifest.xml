@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GlobalsActivity"></activity>
+        <activity android:name=".RoomActivity"></activity>
+        <activity android:name=".GlobalsActivity" />
         <activity
             android:name=".HostRoomActivity"
             android:label="@string/title_activity_host_room"
