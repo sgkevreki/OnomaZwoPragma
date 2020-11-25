@@ -6,12 +6,16 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.example.onomazwopragmaproject.GlobalsActivity.Companion.roomIdLength
 
 class HostRoomActivity : AppCompatActivity() {
+
+    private lateinit var roomId: String
+    private lateinit var roomReference: DatabaseReference
+    private val database = FirebaseDatabase.getInstance()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host_room)
@@ -21,7 +25,6 @@ class HostRoomActivity : AppCompatActivity() {
         var database_test_text = findViewById<TextView>(R.id.database_test)
 
         // TEST THE DATABASE
-        val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("message")
 
         myRef.setValue("Hello, World!")
@@ -44,10 +47,20 @@ class HostRoomActivity : AppCompatActivity() {
 
         test_button.setOnClickListener {
 //            myRef.setValue((0..10).random().toString())
-            var roomId = database.getReference("ABDC")
-            roomId.child("members").child("memberID").setValue("HostPlayerIDHere!")
-            roomId.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")
+            createRoom()
+
         }
+
+    }
+
+    fun createRoom(){
+
+        roomId = "ABCD"
+        roomReference = database.getReference(roomId)
+        // Add host to room members
+        roomReference.child("members").child("memberID").setValue("HostPlayerIDHere!")
+        // TESTS
+        roomReference.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")
 
     }
 }

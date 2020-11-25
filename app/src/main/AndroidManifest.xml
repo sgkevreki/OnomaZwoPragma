@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".GlobalsActivity"></activity>
         <activity
             android:name=".HostRoomActivity"
             android:label="@string/title_activity_host_room"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".JoinRoomActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".HostOrJoinRoomActivity" />
