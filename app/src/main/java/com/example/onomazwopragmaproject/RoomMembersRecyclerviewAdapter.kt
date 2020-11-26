@@ -1,5 +1,6 @@
 package com.example.onomazwopragmaproject
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,9 @@ class RoomMembersRecyclerviewAdapter(private val membersList: List<String>) : Re
         holder.memberImage.resources.getDrawable(R.drawable.name_image)
     }
 
-    override fun getItemCount() = membersList.size
+    override fun getItemCount(): Int {
+        Log.d("RoomAdapter", "getItemCount returns: ${membersList.size}")
+        return membersList.size
+    }
 
 }
