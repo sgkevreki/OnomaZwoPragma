@@ -28,13 +28,13 @@ class RoomActivity : AppCompatActivity() {
         Log.d("Room", "roomId: $roomId")
 
         // Attach a listener to db.roomid.members, so you can get the list of members joining
-        database.reference.child(roomId).child("members").addValueEventListener(object : ValueEventListener {
+        database.reference.child("rooms").child(roomId).child("members").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
-                // What type is value? (HashMap?)
-                Log.d("Room", "${value!!::class.simpleName}")
-                // How to iterate its contents?
-                Log.d("Room", "RoomActivity dataSnapshot.value is: $value")
+//                // What type is value? (HashMap?)
+//                Log.d("Room", "${value!!::class.simpleName}")
+//                // How to iterate its contents?
+//                Log.d("Room", "RoomActivity dataSnapshot.value is: $value")
             }
 
             override fun onCancelled(error: DatabaseError) {

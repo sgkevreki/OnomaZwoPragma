@@ -48,9 +48,9 @@ class HostRoomActivity : AppCompatActivity() {
         testButton.setOnClickListener {
             createRoom()
             // and then go to RoomActivity
-            Log.d("Host", "Host test output")
             val intent = Intent(this, RoomActivity::class.java)
             intent.putExtra("EXTRA_ROOM_ID", roomId)
+            intent.putExtra("EXTRA_IS_HOST", true)
             Log.d("Host", "roomId: $roomId")
             startActivity(intent)
         }
@@ -62,10 +62,13 @@ class HostRoomActivity : AppCompatActivity() {
         // TODO: Make sure there are no duplicate roomIDs!
         roomId = (1..roomIdLength).map { roomIdSource.random() }.joinToString("")
         // Get a database reference from the point of the room and beyond (you don't need the upper layers from here!)
-        roomReference = database.getReference(roomId)
+        roomReference = database.reference.child("rooms").child(roomId)
+
+        // Create host user Member object
+        var hostUser = Member("IAMHOST")
         // Add host to room members
         // TODO: Make sure there are no duplicate memberIDs!
-        roomReference.child("members").setValue("HostPlayerIDHere!")
+        roomReference.child("members").child(hostUser.memberId).setValue(hostUser)
         // TESTS
         roomReference.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")
 

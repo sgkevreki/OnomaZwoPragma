@@ -8,5 +8,7 @@ class GlobalsActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance()
         val roomIdSource = ('A'..'Z') + ('0'..'9')
         const val roomIdLength = 4
+        val memberIdSource = ('A'..'Z') + ('0'..'9') + ('a'..'z')
+        const val memberIdLength = 16
         val SHARED_PREFS : String = "sharedPrefs"
     } }
