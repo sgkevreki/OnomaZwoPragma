@@ -33,8 +33,8 @@ class RoomActivity : AppCompatActivity() {
                 val value = dataSnapshot.value
 //                // What type is value? (HashMap?)
 //                Log.d("Room", "${value!!::class.simpleName}")
-//                // How to iterate its contents?
-//                Log.d("Room", "RoomActivity dataSnapshot.value is: $value")
+                // How to iterate its contents?
+                Log.d("Room", "RoomActivity dataSnapshot.value is: $value")
             }
 
             override fun onCancelled(error: DatabaseError) {

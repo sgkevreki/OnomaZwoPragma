@@ -7,9 +7,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 
 
 class JoinRoomActivity : AppCompatActivity() {
@@ -28,15 +25,13 @@ class JoinRoomActivity : AppCompatActivity() {
             val roomIdInput = roomEdittext.text.toString()
             Log.d("Join", "RoomId: $roomIdInput")
             // Create Member()
-            var user = Member("IAMGUEST")
-            database.reference.child("rooms").child(roomIdInput).child(user.memberId).setValue(user)
-            var intent = Intent(this, RoomActivity::class.java)
+            val user = Member("IAMGUEST")
+            database.reference.child("rooms").child(roomIdInput).child("members").child(user.memberId).setValue(user)
+            val intent = Intent(this, RoomActivity::class.java)
             intent.putExtra("EXTRA_ROOM_ID", roomIdInput)
             intent.putExtra("EXTRA_IS_HOST", false)
             startActivity(intent)
 
-
         }
-
     }
 }
