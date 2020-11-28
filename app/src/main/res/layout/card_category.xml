@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/name_background"
-        android:backgroundTint="#80FFFFFF"
+        android:backgroundTint="#90FFFFFF"
         android:backgroundTintMode="src_over"
         android:visibility="visible">
 

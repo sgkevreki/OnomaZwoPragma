@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.roomIdLength
@@ -23,6 +24,7 @@ class HostRoomActivity : AppCompatActivity() {
         val testButton = findViewById<Button>(R.id.test_room)
 
         val databaseTestText = findViewById<TextView>(R.id.database_test)
+
 
         // TEST THE DATABASE
         val myRef = database.getReference("message")
@@ -55,7 +57,10 @@ class HostRoomActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
     }
+
+
 
     private fun createRoom(){
         // Create random roomId
@@ -73,4 +78,8 @@ class HostRoomActivity : AppCompatActivity() {
         roomReference.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")
 
     }
+
+
+
+
 }

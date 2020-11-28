@@ -33,18 +33,21 @@ class GameActivity : AppCompatActivity() {
         categories.add("Ζώο")
         categories.add("Πράγμα")
 //        categories.add("Φυτό")
-//        categories.add("Μέρος")
+        categories.add("Μέρος")
 
         //images
 
         categories_image.add(resources.getDrawable(R.drawable.name_image))
         categories_image.add(resources.getDrawable(R.drawable.animal_image))
-        categories_image.add(resources.getDrawable(R.drawable.thing_image))
+        categories_image.add(resources.getDrawable(R.drawable.thing_image2))
+        categories_image.add(resources.getDrawable(R.drawable.place_image))
+
 
         //backgrounds
         categories_background.add(resources.getDrawable(R.drawable.name_background))
         categories_background.add(resources.getDrawable(R.drawable.animal_background))
-        categories_background.add(resources.getDrawable(R.drawable.thing_background))
+        categories_background.add(resources.getDrawable(R.drawable.thing_background2))
+        categories_background.add(resources.getDrawable(R.drawable.place_background))
 
 
         // Create the objects needed

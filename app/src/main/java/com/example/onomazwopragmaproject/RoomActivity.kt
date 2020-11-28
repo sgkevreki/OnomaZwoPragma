@@ -1,8 +1,10 @@
 package com.example.onomazwopragmaproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
@@ -66,5 +68,13 @@ class RoomActivity : AppCompatActivity() {
                 layoutManager = recyclerViewLayoutManager
                 adapter = recyclerViewAdapter
             }
+
+
+        val buttonPlayGame = findViewById<Button>(R.id.play_game)
+        buttonPlayGame.setOnClickListener{
+            val intent = Intent(this, GameActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

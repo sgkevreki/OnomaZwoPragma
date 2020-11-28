@@ -10,22 +10,22 @@
 
     <ImageButton
         android:id="@+id/host_room"
-        android:layout_width="303dp"
-        android:layout_height="228dp"
+        android:layout_width="300dp"
+        android:layout_height="214dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.761"
+        app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089"
-        app:srcCompat="@drawable/host_room" />
+        app:layout_constraintVertical_bias="0.17"
+        app:srcCompat="@drawable/host_room2" />
 
     <ImageButton
         android:id="@+id/join_room"
-        android:layout_width="288dp"
-        android:layout_height="279dp"
+        android:layout_width="274dp"
+        android:layout_height="276dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/host_room"
         app:layout_constraintVertical_bias="0.789"
-        app:srcCompat="@drawable/join_room" />
+        app:srcCompat="@drawable/join_room2" />
 
 <!--    <TextView-->
 <!--        android:id="@+id/database_test"-->
