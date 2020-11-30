@@ -11,10 +11,14 @@ import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import java.util.ArrayList
 
 class RoomActivity : AppCompatActivity() {
 
     var membersList: MutableList<String> = mutableListOf()
+    // Categories must be set by this activity, so we can create the categories we need in this activity!
+    // categoriesList is probably passed as an argument to the next activity, `GameActivity`
+    var categoriesList: MutableList<String> = mutableListOf()
     private lateinit var roomId: String
 
 
@@ -26,7 +30,13 @@ class RoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
 
+        // Get roomId, needed in next function, `handleCategories`
         roomId = intent.getStringExtra("EXTRA_ROOM_ID").toString()
+
+        // Function that handles categories
+        handleCategories()
+
+
         Log.d("Room", "roomId: $roomId")
 
         // Attach a listener to db.roomid.members, so you can get the list of members joining
@@ -73,8 +83,24 @@ class RoomActivity : AppCompatActivity() {
         val buttonPlayGame = findViewById<Button>(R.id.play_game)
         buttonPlayGame.setOnClickListener{
             val intent = Intent(this, GameActivity::class.java)
+            intent.putExtra("EXTRA_ROOM_ID", roomId)
+            Log.d("ROOM", "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList")
             startActivity(intent)
         }
 
+    }
+
+    private fun handleCategories() {
+        // Actually we will get the categories from the 'settings' activity or wherever the settings are, so this is only temporary to test the application with some categories!
+        categoriesList.add("Πρόσωπο")
+        categoriesList.add("Ζώο")
+        categoriesList.add("Πράγμα")
+//        categoriesList.add("Πράγμα")
+        categoriesList.add("Μέρος")
+
+        // Create database field for each category under the "room" child.
+        for (element in categoriesList) {
+            database.reference.child("rooms").child(roomId).child("categories").child(element).setValue(true)
+        }
     }
 }

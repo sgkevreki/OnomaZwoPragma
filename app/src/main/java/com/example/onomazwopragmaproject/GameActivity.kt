@@ -2,9 +2,14 @@ package com.example.onomazwopragmaproject
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 class GameActivity : AppCompatActivity() {
 
@@ -28,14 +33,47 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        // Setting a few names in categories for testing
-        categories.add("Πρόσωπο")
-        categories.add("Ζώο")
-        categories.add("Πράγμα")
-//        categories.add("Φυτό")
-        categories.add("Μέρος")
+        // Get roomID
+        var roomID = intent.getStringExtra("EXTRA_ROOM_ID")
 
-        //images
+        // Look in the database for the categories names
+        database.reference.child("rooms").child(roomID).child("categories").addValueEventListener(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    // ALL PRAISE DATASNAPSHOT.CHILDREN!!!!
+                    var thisCategory: String
+                    for (mySnapshot in dataSnapshot.children) {
+                        Log.d("Game", "mySnapshot: $mySnapshot")
+                        thisCategory = mySnapshot.key.toString()
+                        categories.add(thisCategory)
+                    }
+                    recyclerViewAdapter.notifyDataSetChanged()
+//                    val value = dataSnapshot.value as Map<String, Boolean>
+//                    Log.d("Game", "dataSnapshot in rooms/roomID/categories is: $value")
+//                    Log.d(
+//                        "Game",
+//                        "dataSnapshot.key: ${dataSnapshot.key}, dataSnapshot.value: ${dataSnapshot.value}, dataSnapsot.value type: ${dataSnapshot.value}"
+//                    )
+
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    Log.w("hostorjoin", "Failed to read value.", error.toException())
+                }
+            })
+
+//        // Setting a few names in categories for testing
+//        categories.add("Πρόσωπο")
+//        categories.add("Ζώο")
+//        categories.add("Πράγμα")
+////        categories.add("Φυτό")
+//        categories.add("Μέρος")
+//
+//        //images
 
         categories_image.add(resources.getDrawable(R.drawable.name_image))
         categories_image.add(resources.getDrawable(R.drawable.animal_image))
@@ -54,7 +92,11 @@ class GameActivity : AppCompatActivity() {
         // Create a Linear Layout Manager
         recyclerViewLayoutManager = LinearLayoutManager(this)
         // And an instance of an Adapter (note that the 'categories' argument must be of the same type declared in the constructor of the GameRecyclerViewAdapter class (duh))
-        recyclerViewAdapter = GameRecyclerviewAdapter(categoriesList = categories, categoriesList2 = categories_image, categoriesList3 = categories_background)
+        recyclerViewAdapter = GameRecyclerviewAdapter(
+            categoriesList = categories,
+            categoriesList2 = categories_image,
+            categoriesList3 = categories_background
+        )
 
         // Associate firstly the recyclerview layout (R.id.recyclerview) with the object reference (private lateinit var recyclerView)
         recyclerView = findViewById<RecyclerView>(R.id.game_recyclerview)
