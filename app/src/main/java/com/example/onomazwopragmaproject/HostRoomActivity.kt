@@ -3,9 +3,7 @@ package com.example.onomazwopragmaproject
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.roomIdLength
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.roomIdSource
@@ -17,47 +15,42 @@ class HostRoomActivity : AppCompatActivity() {
     private lateinit var roomId: String
     private lateinit var roomReference: DatabaseReference
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host_room)
 
-        val testButton = findViewById<Button>(R.id.test_room)
+        val testButton = findViewById<ImageButton>(R.id.the_room)
 
         val databaseTestText = findViewById<TextView>(R.id.database_test)
 
+        val nameHost = findViewById<EditText>(R.id.nickname)
 
-        // TEST THE DATABASE
-        val myRef = database.getReference("message")
-
-        myRef.setValue("Hello, World!")
-
-        // Read from the database
-        myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                val value = dataSnapshot.getValue(String::class.java)!!
-                Log.d("hostorjoin", "Value is: $value")
-                databaseTestText.text = value
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-                Log.w("hostorjoin", "Failed to read value.", error.toException())
-            }
-        })
 
         testButton.setOnClickListener {
-            createRoom()
-            // and then go to RoomActivity
-            val intent = Intent(this, RoomActivity::class.java)
-            intent.putExtra("EXTRA_ROOM_ID", roomId)
-            intent.putExtra("EXTRA_IS_HOST", true)
-            Log.d("Host", "roomId: $roomId")
-            startActivity(intent)
+
+            if (nameHost.text.isNullOrBlank()) {
+                Toast.makeText(
+                    applicationContext,
+                    "Πρέπει να βάλεις Ψευδώνυμο!",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } else {
+
+                var hostUser = Member(nameHost.text.toString())
+                createRoom()
+                // and then go to RoomActivity
+                val intent = Intent(this, RoomActivity::class.java)
+                intent.putExtra("activity", "host");
+                intent.putExtra("EXTRA_ROOM_ID", roomId)
+                intent.putExtra("EXTRA_MEMBER_ID", hostUser.memberId)
+                Log.d("Host", "roomId: $roomId")
+                startActivity(intent)
+            }
+
         }
-
-
     }
 
 
@@ -70,16 +63,14 @@ class HostRoomActivity : AppCompatActivity() {
         roomReference = database.reference.child("rooms").child(roomId)
 
         // Create host user Member object
-        var hostUser = Member("IAMHOST")
+
+        val nameHost = findViewById<EditText>(R.id.nickname).text.toString()
+
+        var hostUser = Member(nameHost)
         // Add host to room members
         // TODO: Make sure there are no duplicate memberIDs!
         roomReference.child("members").child(hostUser.memberId).setValue(hostUser)
-        // TESTS
-        roomReference.child("settings").child("thisIsATestOption").setValue("ThisIsSoTrue!")
 
     }
-
-
-
 
 }
