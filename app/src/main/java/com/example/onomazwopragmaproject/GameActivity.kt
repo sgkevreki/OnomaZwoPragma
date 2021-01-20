@@ -1,6 +1,7 @@
 package com.example.onomazwopragmaproject
 
 import android.graphics.drawable.Drawable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -12,14 +13,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
+// A list of categories names included in the current game (Proswpo, Pragma, Futo etc) as strings. One card in recyclerview for each category
+var categories: MutableList<String> = mutableListOf()
+var categoriesList: MutableList<String> = mutableListOf()
+var categories_image: MutableList<Drawable> = mutableListOf()
+var categories_background: MutableList<Drawable> = mutableListOf()
+var roomID: String = ""
+
 class GameActivity : AppCompatActivity() {
-
-    // A list of categories names included in the current game (Proswpo, Pragma, Futo etc) as strings. One card in recyclerview for each category
-    var categories: MutableList<String> = mutableListOf()
-    var categoriesList: MutableList<String> = mutableListOf()
-    var categories_image: MutableList<Drawable> = mutableListOf()
-    var categories_background: MutableList<Drawable> = mutableListOf()
-
     // Initialize references to needed elements:
     // recyclerView -> The actual recyclerView object. You need one of these to show of a list of data.
     // recyclerViewAdapter -> An adapter object that contains 3 core functions (OnCreateViewHolder, OnBindViewHolder and getCount).
@@ -36,68 +37,10 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         // Get roomID
-        val roomID = intent.getStringExtra("EXTRA_ROOM_ID").toString()
+        roomID = intent.getStringExtra("EXTRA_ROOM_ID").toString()
 
 
-        database.reference.child("rooms").child(roomID).child("categories").addChildEventListener(
-            object : ChildEventListener {
-                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                    // We want this to run for *each* child. Does it tho?
-                    Log.d("ok", "jchkfg")
-                    Log.d("P0", "${p0.key}, ${p0.children}")
-                    categories.add(p0.key.toString())
-                    Log.d("categ OnChildAdded", categories.toString())
-
-                }
-
-                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildRemoved(p0: DataSnapshot) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onCancelled(p0: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            }
-        )
-//        database.reference.child("rooms").child(roomID).child("categories").addValueEventListener(
-//            object : ValueEventListener {
-//                override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                    // This method is called once with the initial value and again
-//                    // whenever data at this location is updated.
-//                    // ALL PRAISE DATASNAPSHOT.CHILDREN!!!!
-//                    var thisCategory: String
-//                    for (mySnapshot in dataSnapshot.children) {
-//                        Log.d("Game", "mySnapshot: $mySnapshot")
-//                        thisCategory = mySnapshot.key.toString()
-//                        categories.add(thisCategory)
-//                    }
-//                    recyclerViewAdapter.notifyDataSetChanged()
-//
-//
-////                    val value = dataSnapshot.value as Map<String, Boolean>
-////                    Log.d("Game", "dataSnapshot in rooms/roomID/categories is: $value")
-////                    Log.d(
-////                        "Game",
-////                        "dataSnapshot.key: ${dataSnapshot.key}, dataSnapshot.value: ${dataSnapshot.value}, dataSnapsot.value type: ${dataSnapshot.value}"
-////                    )
-//
-//
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    // Failed to read value
-//                    Log.w("hostorjoin", "Failed to read value.", error.toException())
-//                }
-//            })
-        // Look in the database for the categories names
+//        DatabaseAsyncTask().execute()
 
        // categoriesList = intent.getStringArrayListExtra("categoriesList").toMutableList()
         Log.d("categories", categories.toString())
@@ -166,5 +109,48 @@ class GameActivity : AppCompatActivity() {
                 adapter = recyclerViewAdapter
             }
 
+    }
+}
+
+class DatabaseAsyncTask : AsyncTask<Int, Void, String>() {
+    override fun doInBackground(vararg params: Int?): String {
+        database.reference.child("rooms").child(roomID).child("categories").addChildEventListener(
+            object : ChildEventListener {
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+                    // We want this to run for *each* child. Does it tho?
+                    Log.d("ok", "jchkfg")
+                    Log.d("P0", "${p0.key}, ${p0.children}")
+                    categories.add(p0.key.toString())
+                    Log.d("categ OnChildAdded", categories.toString())
+                    if (parw == halsrh)
+                    {
+
+                    }
+
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            }
+        )
+        return("Maybe not ok :(")
+    }
+
+    override fun onPostExecute(result: String?) {
+        super.onPostExecute(result)
     }
 }

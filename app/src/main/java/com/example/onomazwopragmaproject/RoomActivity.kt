@@ -153,6 +153,7 @@ class RoomActivity : AppCompatActivity() {
                 database.reference.child("rooms").child(roomId).child("categories").child(element)
                     .setValue(true)
             }
+            database.reference.child("rooms").child(roomId).child("categsize").setValue(categoriesList.size)
         }
     }
 
