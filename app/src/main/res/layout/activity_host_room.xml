@@ -4,45 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/join_host"
+    android:background="@drawable/lines_background"
     tools:context=".HostRoomActivity">
 
-    <TextView
-        android:id="@+id/database_test"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="186dp"
-        android:layout_marginLeft="186dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginRight="157dp"
-        android:text="DATABASE TEST"
-        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/the_room" />
-
-    <ImageButton
-        android:id="@+id/settings"
-        android:layout_width="250dp"
-        android:layout_height="208dp"
-        android:layout_marginTop="32dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.745"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/settings" />
+        android:layout_marginBottom="430dp">
+
+        <ImageView
+            android:layout_width="370dp"
+            android:layout_height="308.33dp"
+            android:src="@drawable/categories_background" />
+
+        <ImageButton
+            android:id="@+id/name_b"
+            android:layout_width="60dp"
+            android:layout_height="32.3dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/name_b3"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="20dp"/>
+
+        <ImageButton
+            android:id="@+id/animal_b"
+            android:layout_width="50dp"
+            android:layout_height="33.33dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/animal_b"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="70dp"/>
+
+        <ImageButton
+            android:id="@+id/thing_b"
+            android:layout_width="60dp"
+            android:layout_height="32.3dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/thing_b"
+            android:layout_marginTop="95dp"
+            android:layout_marginLeft="100dp"/>
+
+        <ImageButton
+            android:id="@+id/place_b"
+            android:layout_width="60dp"
+            android:layout_height="32.3dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/place_b"
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="55dp"/>
+
+        <ImageButton
+            android:id="@+id/plant_b"
+            android:layout_width="50dp"
+            android:layout_height="24.5dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/plant_b"
+            android:layout_marginTop="75dp"
+            android:layout_marginLeft="155dp"/>
+
+
+        <ImageView
+            android:layout_width="65dp"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/red_underline"
+            android:layout_marginTop="250dp"
+            android:layout_marginLeft="60dp"/>
+
+        <EditText
+            android:id="@+id/category1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Δικιά σου"
+            android:maxLines="1"
+            android:textSize="15sp"
+            android:layout_marginTop="240dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginStart="60dp"
+            android:background="@null"
+            android:gravity="center_vertical" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="200dp"
         android:layout_height="167dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings"
-        android:layout_marginTop="35dp">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="70dp">
 
         <ImageView
             android:layout_width="200dp"
@@ -57,6 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Ψευδώνυμο"
+            android:maxLines="1"
             android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:layout_marginTop="60dp"
@@ -78,4 +139,6 @@
         app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/room" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

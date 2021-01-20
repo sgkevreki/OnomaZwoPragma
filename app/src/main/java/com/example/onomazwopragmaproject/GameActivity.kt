@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -15,6 +16,7 @@ class GameActivity : AppCompatActivity() {
 
     // A list of categories names included in the current game (Proswpo, Pragma, Futo etc) as strings. One card in recyclerview for each category
     var categories: MutableList<String> = mutableListOf()
+    var categoriesList: MutableList<String> = mutableListOf()
     var categories_image: MutableList<Drawable> = mutableListOf()
     var categories_background: MutableList<Drawable> = mutableListOf()
 
@@ -34,58 +36,116 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         // Get roomID
-        var roomID = intent.getStringExtra("EXTRA_ROOM_ID")
+        val roomID = intent.getStringExtra("EXTRA_ROOM_ID").toString()
 
-        // Look in the database for the categories names
-        database.reference.child("rooms").child(roomID).child("categories").addValueEventListener(
-            object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    // ALL PRAISE DATASNAPSHOT.CHILDREN!!!!
-                    var thisCategory: String
-                    for (mySnapshot in dataSnapshot.children) {
-                        Log.d("Game", "mySnapshot: $mySnapshot")
-                        thisCategory = mySnapshot.key.toString()
-                        categories.add(thisCategory)
-                    }
-                    recyclerViewAdapter.notifyDataSetChanged()
-//                    val value = dataSnapshot.value as Map<String, Boolean>
-//                    Log.d("Game", "dataSnapshot in rooms/roomID/categories is: $value")
-//                    Log.d(
-//                        "Game",
-//                        "dataSnapshot.key: ${dataSnapshot.key}, dataSnapshot.value: ${dataSnapshot.value}, dataSnapsot.value type: ${dataSnapshot.value}"
-//                    )
 
+        database.reference.child("rooms").child(roomID).child("categories").addChildEventListener(
+            object : ChildEventListener {
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                    // We want this to run for *each* child. Does it tho?
+                    Log.d("ok", "jchkfg")
+                    Log.d("P0", "${p0.key}, ${p0.children}")
+                    categories.add(p0.key.toString())
+                    Log.d("categ OnChildAdded", categories.toString())
 
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // Failed to read value
-                    Log.w("hostorjoin", "Failed to read value.", error.toException())
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    TODO("Not yet implemented")
                 }
-            })
 
-//        // Setting a few names in categories for testing
-//        categories.add("Πρόσωπο")
-//        categories.add("Ζώο")
-//        categories.add("Πράγμα")
-////        categories.add("Φυτό")
-//        categories.add("Μέρος")
+                override fun onChildRemoved(p0: DataSnapshot) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            }
+        )
+//        database.reference.child("rooms").child(roomID).child("categories").addValueEventListener(
+//            object : ValueEventListener {
+//                override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                    // This method is called once with the initial value and again
+//                    // whenever data at this location is updated.
+//                    // ALL PRAISE DATASNAPSHOT.CHILDREN!!!!
+//                    var thisCategory: String
+//                    for (mySnapshot in dataSnapshot.children) {
+//                        Log.d("Game", "mySnapshot: $mySnapshot")
+//                        thisCategory = mySnapshot.key.toString()
+//                        categories.add(thisCategory)
+//                    }
+//                    recyclerViewAdapter.notifyDataSetChanged()
 //
-//        //images
+//
+////                    val value = dataSnapshot.value as Map<String, Boolean>
+////                    Log.d("Game", "dataSnapshot in rooms/roomID/categories is: $value")
+////                    Log.d(
+////                        "Game",
+////                        "dataSnapshot.key: ${dataSnapshot.key}, dataSnapshot.value: ${dataSnapshot.value}, dataSnapsot.value type: ${dataSnapshot.value}"
+////                    )
+//
+//
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    // Failed to read value
+//                    Log.w("hostorjoin", "Failed to read value.", error.toException())
+//                }
+//            })
+        // Look in the database for the categories names
 
+       // categoriesList = intent.getStringArrayListExtra("categoriesList").toMutableList()
+        Log.d("categories", categories.toString())
+        Log.d("categoriesList", categoriesList.toString())
+
+//        if(categoriesList.contains("Όνομα")) {
+//
+//            categories_image.add(resources.getDrawable(R.drawable.name_image))
+//            categories_background.add(resources.getDrawable(R.drawable.name_background))
+//        }
+
+
+//
+//        if(categoriesList.contains("Όνομα")) {
+//
+//            categories_image.add(resources.getDrawable(R.drawable.name_image))
+//            categories_background.add(resources.getDrawable(R.drawable.name_background))
+//        }
+//        if (categoriesList.contains("Ζώο")) {
+//
+//            categories_image.add(resources.getDrawable(R.drawable.animal_image))
+//            categories_background.add(resources.getDrawable(R.drawable.animal_background))
+//        }
+//        if (categoriesList.contains("Πράγμα")) {
+//
+//            categories_image.add(resources.getDrawable(R.drawable.thing_image2))
+//            categories_background.add(resources.getDrawable(R.drawable.thing_background2))
+//        }
+//        if (categoriesList.contains("Μέρος")) {
+//
+//            categories_image.add(resources.getDrawable(R.drawable.place_image))
+//            categories_background.add(resources.getDrawable(R.drawable.place_background))
+//        }
+//        if (categoriesList.contains("Φυτό")) {
+//
+//            categories_image.add(resources.getDrawable(R.drawable.plant_image))
+//            categories_background.add(resources.getDrawable(R.drawable.plant_background))
+//        }
+        //for the input categories
         categories_image.add(resources.getDrawable(R.drawable.name_image))
-        categories_image.add(resources.getDrawable(R.drawable.animal_image))
-        categories_image.add(resources.getDrawable(R.drawable.thing_image2))
-        categories_image.add(resources.getDrawable(R.drawable.place_image))
-
-
-        //backgrounds
         categories_background.add(resources.getDrawable(R.drawable.name_background))
+
+        categories_image.add(resources.getDrawable(R.drawable.animal_image))
         categories_background.add(resources.getDrawable(R.drawable.animal_background))
-        categories_background.add(resources.getDrawable(R.drawable.thing_background2))
-        categories_background.add(resources.getDrawable(R.drawable.place_background))
+
+        categories_image.add(resources.getDrawable(R.drawable.thing_image))
+        categories_background.add(resources.getDrawable(R.drawable.thing_background))
+
 
 
         // Create the objects needed

@@ -3,6 +3,7 @@ package com.example.onomazwopragmaproject
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -28,7 +29,6 @@ class RoomActivity : AppCompatActivity() {
     private lateinit var memberId: String
     private lateinit var type: String
 
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: RecyclerView.Adapter<*>
     private lateinit var recyclerViewLayoutManager: RecyclerView.LayoutManager
@@ -42,6 +42,7 @@ class RoomActivity : AppCompatActivity() {
         roomId = intent.getStringExtra("EXTRA_ROOM_ID").toString()
         memberId = intent.getStringExtra("EXTRA_MEMBER_ID").toString()
         type = intent.getStringExtra("activity")
+
 
         //Display the Room Id so all the players can enter.
         val roomName: TextView = findViewById(R.id.roomName)
@@ -131,6 +132,7 @@ class RoomActivity : AppCompatActivity() {
         buttonPlayGame.setOnClickListener{
             val intent = Intent(this, GameActivity::class.java)
             intent.putExtra("EXTRA_ROOM_ID", roomId)
+         //   intent.putExtra("categoriesList", ArrayList(categoriesList))
             Log.d(
                 "ROOM",
                 "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
@@ -141,15 +143,16 @@ class RoomActivity : AppCompatActivity() {
     }
 
     private fun handleCategories() {
-        // Actually we will get the categories from the 'settings' activity or wherever the settings are, so this is only temporary to test the application with some categories!
-        categoriesList.add("Όνομα")
-        categoriesList.add("Ζώο")
-        categoriesList.add("Πράγμα")
-        categoriesList.add("Μέρος")
 
-        // Create database field for each category under the "room" child.
-        for (element in categoriesList) {
-            database.reference.child("rooms").child(roomId).child("categories").child(element).setValue(true)
+        if (type == "host") {
+            categoriesList = intent.getStringArrayListExtra("categoriesList2").toMutableList()
+
+
+            // Create database field for each category under the "room" child.
+            for (element in categoriesList) {
+                database.reference.child("rooms").child(roomId).child("categories").child(element)
+                    .setValue(true)
+            }
         }
     }
 

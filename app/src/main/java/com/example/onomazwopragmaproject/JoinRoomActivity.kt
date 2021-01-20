@@ -22,9 +22,8 @@ class JoinRoomActivity : AppCompatActivity() {
         val nameUser = findViewById<EditText>(R.id.username)
 
         val playButton = findViewById<ImageButton>(R.id.playButton)
+
         playButton.setOnClickListener {
-
-
 
             if (roomEdittext.text.isNullOrBlank()) {
                 Toast.makeText(
@@ -78,9 +77,7 @@ class JoinRoomActivity : AppCompatActivity() {
                         else {
                             Log.d("Join", "RoomId: $roomEdittext.text.toString()")
 
-
                             startActivity(intent)
-
 
                         }
 
