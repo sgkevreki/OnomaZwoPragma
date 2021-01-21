@@ -1,10 +1,7 @@
 package com.example.onomazwopragmaproject
 
-import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.drawable.Drawable
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -133,9 +130,32 @@ class RoomActivity : AppCompatActivity() {
         val buttonPlayGame = findViewById<Button>(R.id.play_game)
         if (type == "join"){
             buttonPlayGame.visibility = View.GONE
+            database.reference.child("rooms").child(roomId).child("startflag").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+//                    val value = dataSnapshot.getValue(String::class.java)!!
+//                    Log.d(TAG, "Value is: $value")
+                    database.reference.child("rooms").child(roomId).child("startflag").removeEventListener(this)
+                    val intent = Intent(applicationContext, GameActivity::class.java)
+                    intent.putExtra("EXTRA_ROOM_ID", roomId)
+                    intent.putExtra("EXTRA_MEMBER_ID", memberId)
+                    Log.d(
+                        "ROOM",
+                        "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
+                    )
+                    startActivity(intent)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    Log.w("Oops!", "Failed to read value. In startflag reader.", error.toException())
+                }
+            })
         }
         else {
             buttonPlayGame.setOnClickListener {
+                database.reference.child("rooms").child(roomId).child("startflag").setValue(true)
                 val intent = Intent(this, GameActivity::class.java)
                 intent.putExtra("EXTRA_ROOM_ID", roomId)
                 intent.putExtra("EXTRA_MEMBER_ID", memberId)
@@ -160,7 +180,9 @@ class RoomActivity : AppCompatActivity() {
                 database.reference.child("rooms").child(roomId).child("categories").child(element)
                     .setValue(true)
             }
-            database.reference.child("rooms").child(roomId).child("categsize").setValue(categoriesList.size)
+            database.reference.child("rooms").child(roomId).child("categsize").setValue(
+                categoriesList.size
+            )
         }
     }
 
