@@ -130,28 +130,37 @@ class RoomActivity : AppCompatActivity() {
         val buttonPlayGame = findViewById<Button>(R.id.play_game)
         if (type == "join"){
             buttonPlayGame.visibility = View.GONE
-            database.reference.child("rooms").child(roomId).child("startflag").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
+            database.reference.child("rooms").child(roomId).child("startflag").addValueEventListener(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
 //                    val value = dataSnapshot.getValue(String::class.java)!!
 //                    Log.d(TAG, "Value is: $value")
-                    database.reference.child("rooms").child(roomId).child("startflag").removeEventListener(this)
-                    val intent = Intent(applicationContext, GameActivity::class.java)
-                    intent.putExtra("EXTRA_ROOM_ID", roomId)
-                    intent.putExtra("EXTRA_MEMBER_ID", memberId)
-                    Log.d(
-                        "ROOM",
-                        "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
-                    )
-                    startActivity(intent)
-                }
+                        Log.d("datasnapshot is", "${ dataSnapshot.key}, ${dataSnapshot.value}")
+                        if (dataSnapshot.value == true) {
+                            database.reference.child("rooms").child(roomId).child("startflag")
+                                .removeEventListener(this)
+                            val intent = Intent(applicationContext, GameActivity::class.java)
+                            intent.putExtra("EXTRA_ROOM_ID", roomId)
+                            intent.putExtra("EXTRA_MEMBER_ID", memberId)
+                            Log.d(
+                                "ROOM",
+                                "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
+                            )
+                            startActivity(intent)
+                        }
+                    }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // Failed to read value
-                    Log.w("Oops!", "Failed to read value. In startflag reader.", error.toException())
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        // Failed to read value
+                        Log.w(
+                            "Oops!",
+                            "Failed to read value. In startflag reader.",
+                            error.toException()
+                        )
+                    }
+                })
         }
         else {
             buttonPlayGame.setOnClickListener {
