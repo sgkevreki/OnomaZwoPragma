@@ -1,6 +1,7 @@
 package com.example.onomazwopragmaproject
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
@@ -15,10 +16,11 @@ import com.google.firebase.database.DatabaseError
 
 // A list of categories names included in the current game (Proswpo, Pragma, Futo etc) as strings. One card in recyclerview for each category
 var categories: MutableList<String> = mutableListOf()
-var categoriesList: MutableList<String> = mutableListOf()
 var categories_image: MutableList<Drawable> = mutableListOf()
 var categories_background: MutableList<Drawable> = mutableListOf()
 var roomID: String = ""
+var memberID: String = ""
+
 
 // Initialize references to needed elements:
 // recyclerView -> The actual recyclerView object. You need one of these to show of a list of data.
@@ -34,16 +36,47 @@ private lateinit var recyclerViewLayoutManager: RecyclerView.LayoutManager
 
 class GameActivity : AppCompatActivity() {
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_game)
+
+        // Get roomID
+        roomID = intent.getStringExtra("EXTRA_ROOM_ID").toString()
+        memberID = intent.getStringExtra("EXTRA_MEMBER_ID").toString()
+
+        DatabaseAsyncTask(this).execute()
+
+        Log.d("categories", categories.toString())
+
+    }
+
     fun initializeCategories(){
-        categories_image.add(resources.getDrawable(R.drawable.name_image))
-        categories_background.add(resources.getDrawable(R.drawable.name_background))
+        if(categories.contains("Όνομα")) {
 
-        categories_image.add(resources.getDrawable(R.drawable.animal_image))
-        categories_background.add(resources.getDrawable(R.drawable.animal_background))
+            categories_image.add(resources.getDrawable(R.drawable.name_image))
+            categories_background.add(resources.getDrawable(R.drawable.name_background))
+        }
+        if (categories.contains("Ζώο")) {
 
-        categories_image.add(resources.getDrawable(R.drawable.thing_image))
-        categories_background.add(resources.getDrawable(R.drawable.thing_background))
+            categories_image.add(resources.getDrawable(R.drawable.animal_image))
+            categories_background.add(resources.getDrawable(R.drawable.animal_background))
+        }
+        if (categories.contains("Πράγμα")) {
 
+            categories_image.add(resources.getDrawable(R.drawable.thing_image2))
+            categories_background.add(resources.getDrawable(R.drawable.thing_background2))
+        }
+        if (categories.contains("Μέρος")) {
+
+            categories_image.add(resources.getDrawable(R.drawable.place_image))
+            categories_background.add(resources.getDrawable(R.drawable.place_background))
+        }
+        if (categories.contains("Φυτό")) {
+
+            categories_image.add(resources.getDrawable(R.drawable.plant_image))
+            categories_background.add(resources.getDrawable(R.drawable.plant_background))
+        }
 
 
         // Create the objects needed
@@ -65,56 +98,45 @@ class GameActivity : AppCompatActivity() {
             }
 
     }
+    override fun onBackPressed() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game)
+        // Create the object of AlertDialog Builder class
+        val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@GameActivity)
 
-        // Get roomID
-        roomID = intent.getStringExtra("EXTRA_ROOM_ID").toString()
-
-
-        DatabaseAsyncTask(this).execute()
-
-        Log.d("categories", categories.toString())
-        Log.d("categoriesList", categoriesList.toString())
-
-//        if(categoriesList.contains("Όνομα")) {
-//
-//            categories_image.add(resources.getDrawable(R.drawable.name_image))
-//            categories_background.add(resources.getDrawable(R.drawable.name_background))
-//        }
+        // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+        builder.setCancelable(false)
 
 
-//
-//        if(categoriesList.contains("Όνομα")) {
-//
-//            categories_image.add(resources.getDrawable(R.drawable.name_image))
-//            categories_background.add(resources.getDrawable(R.drawable.name_background))
-//        }
-//        if (categoriesList.contains("Ζώο")) {
-//
-//            categories_image.add(resources.getDrawable(R.drawable.animal_image))
-//            categories_background.add(resources.getDrawable(R.drawable.animal_background))
-//        }
-//        if (categoriesList.contains("Πράγμα")) {
-//
-//            categories_image.add(resources.getDrawable(R.drawable.thing_image2))
-//            categories_background.add(resources.getDrawable(R.drawable.thing_background2))
-//        }
-//        if (categoriesList.contains("Μέρος")) {
-//
-//            categories_image.add(resources.getDrawable(R.drawable.place_image))
-//            categories_background.add(resources.getDrawable(R.drawable.place_background))
-//        }
-//        if (categoriesList.contains("Φυτό")) {
-//
-//            categories_image.add(resources.getDrawable(R.drawable.plant_image))
-//            categories_background.add(resources.getDrawable(R.drawable.plant_background))
-//        }
-        //for the input categories
+        // Set the message show for the Alert time
+        builder.setMessage("Αμα πας πίσω θα βγείς απο το παιχνίδι και απο το δωμάτιο!")
 
+            // Set Alert Title
+        builder.setTitle("ΕΠ!")
+
+        builder
+            .setPositiveButton(
+                "Θέλω να φύγω! :(",
+                DialogInterface.OnClickListener { dialog, which -> // When the user click yes button
+                    // then app will close
+                    database.reference.child("rooms").child(roomID).child("members")
+                        .child(memberID).removeValue()
+                    finish()
+                })
+
+        builder
+            .setNegativeButton(
+                "Θέλω να μείνω τελικα! :)",
+                DialogInterface.OnClickListener { dialog, which -> // If user click no
+                    // then dialog box is canceled.
+                    dialog.cancel()
+                })
+
+
+        // Show the Alert Dialog box
+        builder.create()?.show()
     }
+
+
 }
 
 class DatabaseAsyncTask(val gameActivity: GameActivity) : AsyncTask<Void, Void, String>() {

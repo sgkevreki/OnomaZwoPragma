@@ -96,10 +96,10 @@ class HostRoomActivity : AppCompatActivity() {
         val nameB = findViewById<ImageButton>(R.id.animal_b)
 
         nameB.setOnClickListener {
-            categoriesList2.add("Αζώο")
+            categoriesList2.add("Ζώο")
             nameB.setImageResource(R.drawable.animal_b_pressed)
             nameB.setOnClickListener {
-                categoriesList2.remove("Αζώο")
+                categoriesList2.remove("Ζώο")
                 nameB.setImageResource(R.drawable.animal_b)
                 clickListenerAnimal()
             }

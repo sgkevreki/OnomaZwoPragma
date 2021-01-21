@@ -132,7 +132,7 @@ class RoomActivity : AppCompatActivity() {
         buttonPlayGame.setOnClickListener{
             val intent = Intent(this, GameActivity::class.java)
             intent.putExtra("EXTRA_ROOM_ID", roomId)
-         //   intent.putExtra("categoriesList", ArrayList(categoriesList))
+            intent.putExtra("EXTRA_MEMBER_ID", memberId)
             Log.d(
                 "ROOM",
                 "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
