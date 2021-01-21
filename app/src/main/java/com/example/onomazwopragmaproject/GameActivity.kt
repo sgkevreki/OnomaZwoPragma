@@ -182,4 +182,5 @@ class DatabaseAsyncTask(val gameActivity: GameActivity) : AsyncTask<Void, Void, 
         gameActivity.initializeCategories()
         Log.d("OnPostExe", "Categories here is: $categories")
     }
+
 }

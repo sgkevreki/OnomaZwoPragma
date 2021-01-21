@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -129,15 +131,20 @@ class RoomActivity : AppCompatActivity() {
 
 
         val buttonPlayGame = findViewById<Button>(R.id.play_game)
-        buttonPlayGame.setOnClickListener{
-            val intent = Intent(this, GameActivity::class.java)
-            intent.putExtra("EXTRA_ROOM_ID", roomId)
-            intent.putExtra("EXTRA_MEMBER_ID", memberId)
-            Log.d(
-                "ROOM",
-                "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
-            )
-            startActivity(intent)
+        if (type == "join"){
+            buttonPlayGame.visibility = View.GONE
+        }
+        else {
+            buttonPlayGame.setOnClickListener {
+                val intent = Intent(this, GameActivity::class.java)
+                intent.putExtra("EXTRA_ROOM_ID", roomId)
+                intent.putExtra("EXTRA_MEMBER_ID", memberId)
+                Log.d(
+                    "ROOM",
+                    "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
+                )
+                startActivity(intent)
+            }
         }
 
     }
