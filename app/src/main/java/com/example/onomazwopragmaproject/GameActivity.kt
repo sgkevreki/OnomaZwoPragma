@@ -2,10 +2,12 @@ package com.example.onomazwopragmaproject
 
 import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -97,6 +99,12 @@ class GameActivity : AppCompatActivity() {
                 adapter = recyclerViewAdapter
             }
 
+        val stopButton = findViewById<ImageButton>(R.id.stop_button)
+        stopButton.setOnClickListener {
+            var intent = Intent(this, EndOfGameActivity::class.java)
+            startActivity(intent)
+        }
+
     }
     override fun onBackPressed() {
 
@@ -120,7 +128,8 @@ class GameActivity : AppCompatActivity() {
                     // then app will close
                     database.reference.child("rooms").child(roomID).child("members")
                         .child(memberID).removeValue()
-                    finish()
+                    var intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 })
 
         builder

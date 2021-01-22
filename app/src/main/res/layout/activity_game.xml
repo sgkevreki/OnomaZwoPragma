@@ -28,7 +28,7 @@
                     android:nestedScrollingEnabled="false"/>
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/stop_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center|center_horizontal"
