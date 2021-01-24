@@ -58,10 +58,7 @@ class HostRoomActivity : AppCompatActivity() {
                 )
                     .show()
             } else {
-
-
-                val hostUser = Member(nameHost.text.toString())
-                createRoom()
+                val hostUser = createRoom()
                 // and then go to RoomActivity
                 val intent = Intent(this, RoomActivity::class.java)
                 intent.putExtra("activity", "host");
@@ -179,7 +176,7 @@ class HostRoomActivity : AppCompatActivity() {
 //}
 
 
-    private fun createRoom(){
+    private fun createRoom(): Member{
         // Create random roomId
         // TODO: Make sure there are no duplicate roomIDs!
         roomId = (1..roomIdLength).map { roomIdSource.random() }.joinToString("")
@@ -194,7 +191,6 @@ class HostRoomActivity : AppCompatActivity() {
         // Add host to room members
         // TODO: Make sure there are no duplicate memberIDs!
         roomReference.child("members").child(hostUser.memberId).setValue(hostUser)
-
+        return hostUser
     }
-
 }

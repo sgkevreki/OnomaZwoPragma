@@ -113,11 +113,16 @@ class GameActivity : AppCompatActivity() {
         Log.d("Upload Tests", "recyclerView.layoutmanager!!.itemcounte: ${recyclerView.layoutManager!!.itemCount}")
         for (position in 0 until recyclerView.layoutManager!!.itemCount) {
             Log.d("Upload Tests", "position: $position")
-            val currentView = recyclerView.layoutManager!!
+            val currentViewCategory = recyclerView.layoutManager!!
+                .findViewByPosition(position)!!
+                .findViewById<com.google.android.material.textview.MaterialTextView>(R.id.category_name)
+            val currentViewInput = recyclerView.layoutManager!!
                 .findViewByPosition(position)!!
                 .findViewById<EditText>(R.id.category_user_input)
-            Log.d("Upload Tests", "currentView text: ${currentView.text.toString()}")
-//            database.reference.child("rooms").child(roomID).child("members").child(memberID).child(category).setValue()
+            Log.d("Upload Tests", "currentView text: ${currentViewInput.text.toString()}")
+            database.reference.child("rooms").child(roomID).child("members").child(memberID)
+                .child(currentViewCategory.text.toString())
+                .setValue(currentViewInput.text.toString())
         }
     }
 
