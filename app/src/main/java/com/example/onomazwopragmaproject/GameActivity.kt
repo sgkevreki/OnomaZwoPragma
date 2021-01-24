@@ -1,14 +1,15 @@
 package com.example.onomazwopragmaproject
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,8 @@ import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import java.util.*
+
 
 // A list of categories names included in the current game (Proswpo, Pragma, Futo etc) as strings. One card in recyclerview for each category
 var categories: MutableList<String> = mutableListOf()
@@ -102,15 +105,32 @@ class GameActivity : AppCompatActivity() {
 
         val stopButton = findViewById<ImageButton>(R.id.stop_button)
         stopButton.setOnClickListener {
-            var intent = Intent(this, EndOfGameActivity::class.java)
-            uploadAnswers()
-            startActivity(intent)
+            val countDownTimer: CountDownTimer = object : CountDownTimer(10 * 1000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    findViewById<TextView>(R.id.timer).text = "Seconds remaining: " + millisUntilFinished / 1000
+                }
+
+                override fun onFinish() {
+                    findViewById<TextView>(R.id.timer).text = "Done !"
+                    val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
+                    uploadAnswers()
+                    newIntent.putStringArrayListExtra("CATEGORIES_EXTRA", ArrayList(categories))
+                    newIntent.putExtra("MEMBER_ID_EXTRA", memberID.toString())
+                    newIntent.putExtra("ROOM_ID_EXTRA", roomID.toString())
+                    Log.d("CategoriesGameAct", "Categories: $categories, and as ArrayList: ${ArrayList(categories)}")
+                    startActivity(newIntent)
+                }
+            }
+            countDownTimer.start()
         }
 
     }
 
     private fun uploadAnswers(){
-        Log.d("Upload Tests", "recyclerView.layoutmanager!!.itemcounte: ${recyclerView.layoutManager!!.itemCount}")
+        Log.d(
+            "Upload Tests",
+            "recyclerView.layoutmanager!!.itemcounte: ${recyclerView.layoutManager!!.itemCount}"
+        )
         for (position in 0 until recyclerView.layoutManager!!.itemCount) {
             Log.d("Upload Tests", "position: $position")
             val currentViewCategory = recyclerView.layoutManager!!

@@ -7,25 +7,36 @@
     android:layout_height="match_parent"
     android:background="@drawable/just_a_test"
     tools:context=".GameActivity">
+
     <ScrollView
-        android:layout_height="0dp"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/game_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:nestedScrollingEnabled="false"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/game_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Timer Here!" />
 
             <ImageButton
                 android:id="@+id/stop_button"
@@ -34,12 +45,12 @@
                 android:layout_gravity="center|center_horizontal"
                 android:layout_marginTop="28dp"
                 android:background="@android:color/transparent"
+                android:paddingBottom="10dp"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/game_recyclerview"
-                app:srcCompat="@drawable/say_stop2"
-                android:paddingBottom="10dp"/>
+                app:srcCompat="@drawable/say_stop2" />
 
 
         </LinearLayout>
