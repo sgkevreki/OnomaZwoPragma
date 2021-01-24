@@ -17,6 +17,7 @@ import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
@@ -104,14 +105,43 @@ class GameActivity : AppCompatActivity() {
             }
 
         val stopButton = findViewById<ImageButton>(R.id.stop_button)
+
+        database.reference.child("rooms").child(roomID).child("timerisset").addValueEventListener(
+            object : ValueEventListener{
+                override fun onDataChange(p0: DataSnapshot) {
+                    Log.d("p0.value is", ": ${p0.value}. Equal to ? ${p0.value.toString() == "0"}")
+                    if (p0.value != null) {
+                        stopButton.setOnClickListener(null)
+                    }
+                    if (p0.value == 0){
+                        Log.d("INSIDE LISTENER", "in the 'stop pressed' listener")
+                        database.reference.child("rooms").child(roomID).child("timerisset").removeEventListener(this)
+                        val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
+                        uploadAnswers()
+                        newIntent.putStringArrayListExtra("CATEGORIES_EXTRA", ArrayList(categories))
+                        newIntent.putExtra("MEMBER_ID_EXTRA", memberID.toString())
+                        newIntent.putExtra("ROOM_ID_EXTRA", roomID.toString())
+                        Log.d("CategoriesGameAct", "Categories: $categories, and as ArrayList: ${ArrayList(categories)}")
+                        startActivity(newIntent)
+                    }
+                    Log.d("TESTSTS", "p0.value: ${p0.value}")
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            }
+        )
         stopButton.setOnClickListener {
+
             val countDownTimer: CountDownTimer = object : CountDownTimer(10 * 1000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    findViewById<TextView>(R.id.timer).text = "Seconds remaining: " + millisUntilFinished / 1000
+                    findViewById<TextView>(R.id.timer).text = "Seconds remaining: ${millisUntilFinished / 1000}"
+                    database.reference.child("rooms").child(roomID).child("timerisset").setValue(millisUntilFinished / 1000)
                 }
 
                 override fun onFinish() {
-                    findViewById<TextView>(R.id.timer).text = "Done !"
+                    findViewById<TextView>(R.id.timer).text = "Done!"
                     val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
                     uploadAnswers()
                     newIntent.putStringArrayListExtra("CATEGORIES_EXTRA", ArrayList(categories))
@@ -188,41 +218,40 @@ class GameActivity : AppCompatActivity() {
 
 }
 
-class DatabaseAsyncTask(val gameActivity: GameActivity) : AsyncTask<Void, Void, String>() {
+class DatabaseAsyncTask(private val gameActivity: GameActivity) : AsyncTask<Void, Void, String>() {
 
     override fun doInBackground(vararg params: Void?): String {
-        database.reference.child("rooms").child(roomID).child("categories").addChildEventListener(
-            object : ChildEventListener {
-                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+        val myListener = object : ChildEventListener {
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
 
-                    // We want this to run for *each* child. Does it tho?
-                    Log.d("ok", "jchkfg")
-                    Log.d("P0", "${p0.key}, ${p0.children}")
-                    categories.add(p0.key.toString())
-                    Log.d("categ OnChildAdded", categories.toString())
+                // We want this to run for *each* child. Does it tho?
+                Log.d("ok", "jchkfg")
+                Log.d("P0", "${p0.key}, ${p0.children}")
+                categories.add(p0.key.toString())
+                Log.d("categ OnChildAdded", categories.toString())
 
-                }
-
-                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildRemoved(p0: DataSnapshot) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onCancelled(p0: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
             }
-        )
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+        database.reference.child("rooms").child(roomID).child("categories").addChildEventListener(myListener)
         // Block so that 'categories' is filled
         Thread.sleep(1000)
-
+        database.reference.child("rooms").child(roomID).child("categories").removeEventListener(myListener)
         return("Maybe OK")
     }
 

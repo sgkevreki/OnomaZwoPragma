@@ -55,66 +55,66 @@ class RoomActivity : AppCompatActivity() {
         Log.d("Room", "roomId: $roomId")
 
         // Attach a listener to db.roomid.members, so you can get the list of members joining
-        database.reference.child("rooms").child(roomId).child("members").addChildEventListener(
-            object : ChildEventListener {
-                override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
-                    // OMG this is called once for every item in member list!
-                    // member added
-                    Log.d(
-                        "Room",
-                        "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
-                            dataSnapshot.getValue(
-                                Member::class.java
-                            )
-                        }, dataSnapsot.value.hashCode?: ${dataSnapshot.value}"
-                    )
-                    var userObject = dataSnapshot.getValue(Member::class.java)
-                    Log.d("Room", "userObject: $userObject")
-                    membersList.add(userObject!!.name)
-                    Log.d("Room", "userObject!!.name: ${userObject!!.name}")
-                    recyclerViewAdapter.notifyDataSetChanged()
-                }
+        val myListener = object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                // OMG this is called once for every item in member list!
+                // member added
+                Log.d(
+                    "Room",
+                    "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
+                        dataSnapshot.getValue(
+                            Member::class.java
+                        )
+                    }, dataSnapsot.value.hashCode?: ${dataSnapshot.value}"
+                )
+                var userObject = dataSnapshot.getValue(Member::class.java)
+                Log.d("Room", "userObject: $userObject")
+                membersList.add(userObject!!.name)
+                Log.d("Room", "userObject!!.name: ${userObject!!.name}")
+                recyclerViewAdapter.notifyDataSetChanged()
+            }
 
-                override fun onChildChanged(dataSnapshot: DataSnapshot, p1: String?) {
-                    Log.d(
-                        "Room",
-                        "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
-                            dataSnapshot.getValue(
-                                Member::class.java
-                            )
-                        }, dataSnapsot.value.hashCode?: ${dataSnapshot.value}"
-                    )
-                    var userObject = dataSnapshot.getValue(Member::class.java)
-                    Log.d("Room", "userObject: $userObject")
-                    membersList.remove(userObject!!.name)
-                    Log.d("Room", "userObject!!.name: ${userObject!!.name}")
-                    recyclerViewAdapter.notifyDataSetChanged()
-                }
+            override fun onChildChanged(dataSnapshot: DataSnapshot, p1: String?) {
+                Log.d(
+                    "Room",
+                    "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
+                        dataSnapshot.getValue(
+                            Member::class.java
+                        )
+                    }, dataSnapsot.value.hashCode?: ${dataSnapshot.value}"
+                )
+                var userObject = dataSnapshot.getValue(Member::class.java)
+                Log.d("Room", "userObject: $userObject")
+                membersList.remove(userObject!!.name)
+                Log.d("Room", "userObject!!.name: ${userObject!!.name}")
+                recyclerViewAdapter.notifyDataSetChanged()
+            }
 
-                override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                    Log.d(
-                        "Room",
-                        "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
-                            dataSnapshot.getValue(
-                                Member::class.java
-                            )
-                        }, dataSnapsot2.value.hashCode?: ${dataSnapshot.value}"
-                    )
-                    var userObject = dataSnapshot.getValue(Member::class.java)
-                    Log.d("Room", "userObject: $userObject")
-                    membersList.remove(userObject!!.name)
-                    Log.d("Room", "userObject!!.name: ${userObject!!.name}")
-                    recyclerViewAdapter.notifyDataSetChanged()
-                }
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                Log.d(
+                    "Room",
+                    "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
+                        dataSnapshot.getValue(
+                            Member::class.java
+                        )
+                    }, dataSnapsot2.value.hashCode?: ${dataSnapshot.value}"
+                )
+                var userObject = dataSnapshot.getValue(Member::class.java)
+                Log.d("Room", "userObject: $userObject")
+                membersList.remove(userObject!!.name)
+                Log.d("Room", "userObject!!.name: ${userObject!!.name}")
+                recyclerViewAdapter.notifyDataSetChanged()
+            }
 
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                    TODO("Not yet implemented")
-                }
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
 
-                override fun onCancelled(p0: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+        database.reference.child("rooms").child(roomId).child("members").addChildEventListener(myListener)
 
 
         // Regular Recyclerview initiation stuff
@@ -130,37 +130,40 @@ class RoomActivity : AppCompatActivity() {
         val buttonPlayGame = findViewById<Button>(R.id.play_game)
         if (type == "join"){
             buttonPlayGame.visibility = View.GONE
-            database.reference.child("rooms").child(roomId).child("startflag").addValueEventListener(
-                object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
+            val myStartGameListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
 //                    val value = dataSnapshot.getValue(String::class.java)!!
 //                    Log.d(TAG, "Value is: $value")
-                        Log.d("datasnapshot is", "${ dataSnapshot.key}, ${dataSnapshot.value}")
-                        if (dataSnapshot.value == true) {
-                            database.reference.child("rooms").child(roomId).child("startflag")
-                                .removeEventListener(this)
-                            val intent = Intent(applicationContext, GameActivity::class.java)
-                            intent.putExtra("EXTRA_ROOM_ID", roomId)
-                            intent.putExtra("EXTRA_MEMBER_ID", memberId)
-                            Log.d(
-                                "ROOM",
-                                "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
-                            )
-                            startActivity(intent)
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                        Log.w(
-                            "Oops!",
-                            "Failed to read value. In startflag reader.",
-                            error.toException()
+                    Log.d("datasnapshot is", "${ dataSnapshot.key}, ${dataSnapshot.value}")
+                    if (dataSnapshot.value == true) {
+                        database.reference.child("rooms").child(roomId).child("startflag")
+                            .removeEventListener(this)
+                        val intent = Intent(applicationContext, GameActivity::class.java)
+                        intent.putExtra("EXTRA_ROOM_ID", roomId)
+                        intent.putExtra("EXTRA_MEMBER_ID", memberId)
+                        Log.d(
+                            "ROOM",
+                            "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
                         )
+                        // Remove the listeners!
+                        database.reference.child("rooms").child(roomId).child("members").removeEventListener(myListener)
+                        database.reference.child("rooms").child(roomId).child("startflag").removeEventListener(this)
+                        startActivity(intent)
                     }
-                })
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    Log.w(
+                        "Oops!",
+                        "Failed to read value. In startflag reader.",
+                        error.toException()
+                    )
+                }
+            }
+            database.reference.child("rooms").child(roomId).child("startflag").addValueEventListener(myStartGameListener)
         }
         else {
             buttonPlayGame.setOnClickListener {

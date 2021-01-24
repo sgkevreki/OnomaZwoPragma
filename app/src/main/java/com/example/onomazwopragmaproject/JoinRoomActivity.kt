@@ -76,7 +76,6 @@ class JoinRoomActivity : AppCompatActivity() {
 
                         else {
                             Log.d("Join", "RoomId: $roomEdittext.text.toString()")
-
                             startActivity(intent)
 
                         }
