@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -102,10 +103,24 @@ class GameActivity : AppCompatActivity() {
         val stopButton = findViewById<ImageButton>(R.id.stop_button)
         stopButton.setOnClickListener {
             var intent = Intent(this, EndOfGameActivity::class.java)
+            uploadAnswers()
             startActivity(intent)
         }
 
     }
+
+    private fun uploadAnswers(){
+        Log.d("Upload Tests", "recyclerView.layoutmanager!!.itemcounte: ${recyclerView.layoutManager!!.itemCount}")
+        for (position in 0 until recyclerView.layoutManager!!.itemCount) {
+            Log.d("Upload Tests", "position: $position")
+            val currentView = recyclerView.layoutManager!!
+                .findViewByPosition(position)!!
+                .findViewById<EditText>(R.id.category_user_input)
+            Log.d("Upload Tests", "currentView text: ${currentView.text.toString()}")
+//            database.reference.child("rooms").child(roomID).child("members").child(memberID).child(category).setValue()
+        }
+    }
+
     override fun onBackPressed() {
 
         // Create the object of AlertDialog Builder class
