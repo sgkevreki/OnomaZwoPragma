@@ -137,21 +137,21 @@ class GameActivity : AppCompatActivity() {
         )
         stopButton.setOnClickListener {
 
-            val countDownTimer: CountDownTimer = object : CountDownTimer(10 * 1000, 1000) {
+            val countDownTimer: CountDownTimer = object : CountDownTimer(2 * 1000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    findViewById<TextView>(R.id.timer).text = "Seconds remaining: ${millisUntilFinished / 1000}"
+                    findViewById<TextView>(R.id.timer).text = "${millisUntilFinished / 1000}"
                     database.reference.child("rooms").child(roomID).child("timerisset").setValue(millisUntilFinished / 1000)
                 }
 
                 override fun onFinish() {
                     findViewById<TextView>(R.id.timer).text = "Done!"
-                    val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
-                    uploadAnswers()
-                    newIntent.putStringArrayListExtra("CATEGORIES_EXTRA", ArrayList(categories))
-                    newIntent.putExtra("MEMBER_ID_EXTRA", memberID.toString())
-                    newIntent.putExtra("ROOM_ID_EXTRA", roomID.toString())
-                    Log.d("CategoriesGameAct", "Categories: $categories, and as ArrayList: ${ArrayList(categories)}")
-                    startActivity(newIntent)
+//                    val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
+//                    uploadAnswers()
+//                    newIntent.putStringArrayListExtra("CATEGORIES_EXTRA", ArrayList(categories))
+//                    newIntent.putExtra("MEMBER_ID_EXTRA", memberID.toString())
+//                    newIntent.putExtra("ROOM_ID_EXTRA", roomID.toString())
+//                    Log.d("CategoriesGameAct", "Categories: $categories, and as ArrayList: ${ArrayList(categories)}")
+//                    startActivity(newIntent)
                 }
             }
             countDownTimer.start()
