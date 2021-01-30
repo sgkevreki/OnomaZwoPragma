@@ -59,50 +59,20 @@ class RoomActivity : AppCompatActivity() {
             override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
                 // OMG this is called once for every item in member list!
                 // member added
-                Log.d(
-                    "Room",
-                    "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
-                        dataSnapshot.getValue(
-                            Member::class.java
-                        )
-                    }, dataSnapsot.value.hashCode?: ${dataSnapshot.value}"
-                )
                 var userObject = dataSnapshot.getValue(Member::class.java)
-                Log.d("Room", "userObject: $userObject")
                 membersList.add(userObject!!.name)
-                Log.d("Room", "userObject!!.name: ${userObject!!.name}")
                 recyclerViewAdapter.notifyDataSetChanged()
             }
 
             override fun onChildChanged(dataSnapshot: DataSnapshot, p1: String?) {
-                Log.d(
-                    "Room",
-                    "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
-                        dataSnapshot.getValue(
-                            Member::class.java
-                        )
-                    }, dataSnapsot.value.hashCode?: ${dataSnapshot.value}"
-                )
                 var userObject = dataSnapshot.getValue(Member::class.java)
-                Log.d("Room", "userObject: $userObject")
                 membersList.remove(userObject!!.name)
-                Log.d("Room", "userObject!!.name: ${userObject!!.name}")
                 recyclerViewAdapter.notifyDataSetChanged()
             }
 
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {
-                Log.d(
-                    "Room",
-                    "dataSnapshot.key: ${dataSnapshot.key?.get(0)}, dataSnapshot.value: ${
-                        dataSnapshot.getValue(
-                            Member::class.java
-                        )
-                    }, dataSnapsot2.value.hashCode?: ${dataSnapshot.value}"
-                )
                 var userObject = dataSnapshot.getValue(Member::class.java)
-                Log.d("Room", "userObject: $userObject")
                 membersList.remove(userObject!!.name)
-                Log.d("Room", "userObject!!.name: ${userObject!!.name}")
                 recyclerViewAdapter.notifyDataSetChanged()
             }
 
@@ -147,9 +117,11 @@ class RoomActivity : AppCompatActivity() {
                             "ROOM",
                             "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
                         )
+                        Log.d("ROOMLISTENER", "################################# THIS IS THE LISTENER THAT STARTS THE GAME ACTIVITY #########################################################################")
                         // Remove the listeners!
                         database.reference.child("rooms").child(roomId).child("members").removeEventListener(myListener)
                         database.reference.child("rooms").child(roomId).child("startflag").removeEventListener(this)
+                        Log.d("ROOMLISTENER", "################## UNDER HERE I SHALL NOT SEE THE OTHE ### AGAIN ########################")
                         startActivity(intent)
                     }
                 }
@@ -192,9 +164,8 @@ class RoomActivity : AppCompatActivity() {
                 database.reference.child("rooms").child(roomId).child("categories").child(element)
                     .setValue(true)
             }
-            database.reference.child("rooms").child(roomId).child("categsize").setValue(
-                categoriesList.size
-            )
+            database.reference.child("rooms").child(roomId).child("categsize")
+                .setValue(categoriesList.size)
         }
     }
 

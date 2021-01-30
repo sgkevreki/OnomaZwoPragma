@@ -105,15 +105,17 @@ class GameActivity : AppCompatActivity() {
             }
 
         val stopButton = findViewById<ImageButton>(R.id.stop_button)
-
+        Log.d("OUTSIDE LISTENER", "Outside listener")
         database.reference.child("rooms").child(roomID).child("timerisset").addValueEventListener(
             object : ValueEventListener{
                 override fun onDataChange(p0: DataSnapshot) {
                     Log.d("p0.value is", ": ${p0.value}. Equal to ? ${p0.value.toString() == "0"}")
                     if (p0.value != null) {
                         stopButton.setOnClickListener(null)
+                        findViewById<TextView>(R.id.timer).text = p0.value.toString()
+
                     }
-                    if (p0.value == 0){
+                    if (p0.value.toString() == "0"){
                         Log.d("INSIDE LISTENER", "in the 'stop pressed' listener")
                         database.reference.child("rooms").child(roomID).child("timerisset").removeEventListener(this)
                         val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
@@ -123,6 +125,7 @@ class GameActivity : AppCompatActivity() {
                         newIntent.putExtra("ROOM_ID_EXTRA", roomID.toString())
                         Log.d("CategoriesGameAct", "Categories: $categories, and as ArrayList: ${ArrayList(categories)}")
                         startActivity(newIntent)
+                        Log.d("Time is up!", "Did the answers get to the database?")
                     }
                     Log.d("TESTSTS", "p0.value: ${p0.value}")
                 }
@@ -223,13 +226,8 @@ class DatabaseAsyncTask(private val gameActivity: GameActivity) : AsyncTask<Void
     override fun doInBackground(vararg params: Void?): String {
         val myListener = object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-
                 // We want this to run for *each* child. Does it tho?
-                Log.d("ok", "jchkfg")
-                Log.d("P0", "${p0.key}, ${p0.children}")
                 categories.add(p0.key.toString())
-                Log.d("categ OnChildAdded", categories.toString())
-
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {

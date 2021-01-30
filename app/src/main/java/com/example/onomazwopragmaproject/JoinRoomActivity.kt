@@ -60,7 +60,7 @@ class JoinRoomActivity : AppCompatActivity() {
                 intent.putExtra("EXTRA_MEMBER_ID", user.memberId)
 
 
-                ref.addValueEventListener(object : ValueEventListener {
+                val joinListener = object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                         if (!dataSnapshot.hasChild(roomEdittext.text.toString())) {
@@ -76,6 +76,7 @@ class JoinRoomActivity : AppCompatActivity() {
 
                         else {
                             Log.d("Join", "RoomId: $roomEdittext.text.toString()")
+                            ref.removeEventListener(this)
                             startActivity(intent)
 
                         }
@@ -88,7 +89,8 @@ class JoinRoomActivity : AppCompatActivity() {
                         Log.w("join", "Failed to read value.", error.toException())
                     }
 
-                })
+                }
+                ref.addValueEventListener(joinListener)
 
             }
 

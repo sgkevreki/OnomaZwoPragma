@@ -30,31 +30,31 @@ class ScreenSlidePageFragment(categoryNameInput: String) : Fragment() {
         categoryNameTextView.text = categoryName
         memberNameTextView.text = memberID
 
-        database.reference.child("rooms").child(roomID).child("members").addChildEventListener(
-            object : ChildEventListener{
-                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-//                    val answers = p0.child()
-
-                    Log.d("Answers Database Tests", "${p0.child(categoryName).value}}")
-                }
-
-                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildRemoved(p0: DataSnapshot) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onCancelled(p0: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            }
-        )
+//        database.reference.child("rooms").child(roomID).child("members").addChildEventListener(
+//            object : ChildEventListener{
+//                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+////                    val answers = p0.child()
+//
+//                    Log.d("Answers Database Tests", "${p0.child(categoryName).value}}")
+//                }
+//
+//                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//                override fun onChildRemoved(p0: DataSnapshot) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//                override fun onCancelled(p0: DatabaseError) {
+//                    TODO("Not yet implemented")
+//                }
+//            }
+//        )
 
 
 
