@@ -1,7 +1,6 @@
 package com.example.onomazwopragmaproject
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -13,12 +12,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
-import com.plattysoft.leonids.ParticleSystem
-
-///**
-// * The number of pages (wizard steps) to show in this demo.
-// */
-//private const val NUM_PAGES = 5
+import kotlinx.android.synthetic.main.card_category_answers.*
 
 class EndOfGameActivity : FragmentActivity() {
 
@@ -29,6 +23,8 @@ class EndOfGameActivity : FragmentActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var memberID: String
     private lateinit var roomID: String
+    private val answers: HashMap <String, HashMap<String, String>> = hashMapOf()
+    private lateinit var memberName: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +34,6 @@ class EndOfGameActivity : FragmentActivity() {
         roomID = intent.getStringExtra("ROOM_ID_EXTRA")!!.toString()
         memberID = intent.getStringExtra("MEMBER_ID_EXTRA")!!.toString()
 
-        val answers: HashMap <String, HashMap<String, String>> = hashMapOf()
 
         val membersAnswersChildListener = object : ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -46,22 +41,28 @@ class EndOfGameActivity : FragmentActivity() {
                 for (category in categories){
                     memberAnswers[category] = p0.child(category).value.toString()
                 }
+                if(p0.key.toString() == memberID) {
+                    memberName = p0.child("name").value.toString()
+                }
                 answers[p0.key.toString()] = memberAnswers
                 Log.d("RUNS", "for p0: $p0, and answers is: $answers")
             }
-
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("Not yet implemented")
+                var memberAnswers : HashMap<String, String> = hashMapOf()
+                for (category in categories){
+                    memberAnswers[category] = p0.child(category).value.toString()
+                }
+                if(p0.key.toString() == memberID) {
+                    memberName = p0.child("name").value.toString()
+                }
+                answers[p0.key.toString()] = memberAnswers
             }
-
             override fun onChildRemoved(p0: DataSnapshot) {
                 TODO("Not yet implemented")
             }
-
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
                 TODO("Not yet implemented")
             }
-
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
@@ -87,7 +88,7 @@ class EndOfGameActivity : FragmentActivity() {
                 Log.d("EndOfGameCateg", "Categories: $categories, memberID: $memberID, roomID:, $roomID")
 
                 // The pager adapter, which provides the pages to the view pager widget.
-                val pagerAdapter = ScreenSlidePagerAdapter(this@EndOfGameActivity, categories as ArrayList<String>)
+                val pagerAdapter = ScreenSlidePagerAdapter(this@EndOfGameActivity, categories as ArrayList<String>, answers, memberID, memberName)
                 viewPager.adapter = pagerAdapter
             }
         }
@@ -109,9 +110,15 @@ class EndOfGameActivity : FragmentActivity() {
         }
     }
 
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, categories: ArrayList<String>) : FragmentStateAdapter(fa) {
+    private inner class ScreenSlidePagerAdapter(
+        fa: FragmentActivity,
+        categories: ArrayList<String>,
+        answers: HashMap<String, HashMap<String, String>>,
+        memberID: String,
+        memberName: String
+    ) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = categories.size
 
-        override fun createFragment(position: Int): Fragment = ScreenSlidePageFragment(categories[position])
+        override fun createFragment(position: Int): Fragment = ScreenSlidePageFragment(categories[position], answers, memberID, memberName)
     }
 }

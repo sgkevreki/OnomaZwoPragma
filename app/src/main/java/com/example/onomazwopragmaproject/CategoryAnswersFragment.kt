@@ -7,14 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 
-class ScreenSlidePageFragment(categoryNameInput: String) : Fragment() {
+class ScreenSlidePageFragment(
+    categoryNameInput: String,
+    answersInput: HashMap<String, HashMap<String, String>>,
+    memberIDInput: String,
+    memberNameInput: String
+) : Fragment() {
 
     private var categoryName = categoryNameInput
+    private val answers: HashMap<String, HashMap<String, String>> = answersInput
+    private var memberID = memberIDInput
+    private var memberName = memberNameInput
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,13 +26,16 @@ class ScreenSlidePageFragment(categoryNameInput: String) : Fragment() {
         savedInstanceState: Bundle?
     ): View
     {
+        Log.d("PRINTS", "id: ${memberID}, name: ${memberName.toString()}")
+        val myAnswers: HashMap<String, String> = answers[memberID]!!
         val rootView = inflater.inflate(R.layout.card_category_answers, container, false)
         val categoryNameTextView = rootView.findViewById<TextView>(R.id.category_name_answers)
         val memberNameTextView = rootView.findViewById<TextView>(R.id.member_name_answers)
         val answerTextView = rootView.findViewById<TextView>(R.id.answer)
 
         categoryNameTextView.text = categoryName
-        memberNameTextView.text = memberID
+        memberNameTextView.text = memberName
+        answerTextView.text = myAnswers[categoryName].toString()
 
 //        database.reference.child("rooms").child(roomID).child("members").addChildEventListener(
 //            object : ChildEventListener{
