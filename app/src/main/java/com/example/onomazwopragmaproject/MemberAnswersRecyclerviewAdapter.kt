@@ -22,10 +22,10 @@ class MemberAnswersRecyclerviewAdapter(private val answers: MutableList<LinkedHa
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var myMap = answers[position]
+//        var myMap = answers[position]
 //        holder.memberName.text = myMap[]
 //        holder.memberNameAnswers.text = answers[myKeys[position]]
-        holder.memberImage.resources.getDrawable(R.drawable.name_image)
+//        holder.memberImage.resources.getDrawable(R.drawable.name_image)
     }
 
     override fun getItemCount(): Int {

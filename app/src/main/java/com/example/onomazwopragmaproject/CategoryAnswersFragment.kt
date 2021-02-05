@@ -44,20 +44,20 @@ class ScreenSlidePageFragment(
         memberNameTextView.text = memberName
         answerTextView.text = myAnswers[categoryName].toString()
 
-        // Need to pass a *List* of *Hashmaps* so that the adapter can iterate over the list!
-        val answersList: MutableList<LinkedHashMap<String, String>> = mutableListOf()
-        for (key in answers.keys){
-            answersList.add(answers[key]!!)
-        }
-
-        // Regular Recyclerview initiation stuff
-        recyclerViewLayoutManager = LinearLayoutManager(context)
-        recyclerViewAdapter = MemberAnswersRecyclerviewAdapter(answersList)
-
-        recyclerView = rootView.findViewById<RecyclerView>(R.id.other_answers_recyclerview).apply{
-            layoutManager = recyclerViewLayoutManager
-            adapter = recyclerViewAdapter
-        }
+//        // Need to pass a *List* of *Hashmaps* so that the adapter can iterate over the list!
+//        val answersList: MutableList<LinkedHashMap<String, String>> = mutableListOf()
+//        for (key in answers.keys){
+//            answersList.add(answers[key]!!)
+//        }
+//
+//        // Regular Recyclerview initiation stuff
+//        recyclerViewLayoutManager = LinearLayoutManager(context)
+//        recyclerViewAdapter = MemberAnswersRecyclerviewAdapter(answersList)
+//
+//        recyclerView = rootView.findViewById<RecyclerView>(R.id.other_answers_recyclerview).apply{
+//            layoutManager = recyclerViewLayoutManager
+//            adapter = recyclerViewAdapter
+//        }
 
         return rootView
     }

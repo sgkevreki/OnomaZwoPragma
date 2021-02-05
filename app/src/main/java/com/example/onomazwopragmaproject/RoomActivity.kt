@@ -45,8 +45,18 @@ class RoomActivity : AppCompatActivity() {
 
         //Display the Room Id so all the players can enter.
         val roomName: TextView = findViewById(R.id.roomName)
-        roomName.text = "Δωμάτιο  " + roomId + "!"
+        roomName.text = "Δωμάτιο  " + roomId + " !"
 
+
+        //Letter
+        val letter: TextView = findViewById(R.id.letter)
+        if (type == "host") {
+            val randomLetter = ('Α'..'Ω')
+            letter.text = "Το γράμμα του γύρου για σένα και τους συμπαίκτες σου είναι: " + randomLetter.random() + " !"
+        }
+        else if (type == "join") {
+            letter.text = "Ρώτα τον host για το γράμμα του γύρου!"
+        }
 
         // Function that handles categories
         handleCategories()
@@ -137,7 +147,6 @@ class RoomActivity : AppCompatActivity() {
             }
             database.reference.child("rooms").child(roomId).child("startflag").addValueEventListener(myStartGameListener)
         }
-        else {
             buttonPlayGame.setOnClickListener {
                 database.reference.child("rooms").child(roomId).child("startflag").setValue(true)
                 val intent = Intent(this, GameActivity::class.java)
@@ -149,7 +158,7 @@ class RoomActivity : AppCompatActivity() {
                 )
                 startActivity(intent)
             }
-        }
+        
 
     }
 
