@@ -23,7 +23,7 @@ class EndOfGameActivity : FragmentActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var memberID: String
     private lateinit var roomID: String
-    private val answers: HashMap <String, HashMap<String, String>> = hashMapOf()
+    private val answers: HashMap <String, LinkedHashMap<String, String>> = hashMapOf()
     private lateinit var memberName: String
 
 
@@ -37,7 +37,7 @@ class EndOfGameActivity : FragmentActivity() {
 
         val membersAnswersChildListener = object : ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                var memberAnswers : HashMap<String, String> = hashMapOf()
+                var memberAnswers : LinkedHashMap<String, String> = linkedMapOf()
                 for (category in categories){
                     memberAnswers[category] = p0.child(category).value.toString()
                 }
@@ -48,7 +48,7 @@ class EndOfGameActivity : FragmentActivity() {
                 Log.d("RUNS", "for p0: $p0, and answers is: $answers")
             }
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                var memberAnswers : HashMap<String, String> = hashMapOf()
+                var memberAnswers : LinkedHashMap<String, String> = linkedMapOf()
                 for (category in categories){
                     memberAnswers[category] = p0.child(category).value.toString()
                 }
@@ -58,7 +58,7 @@ class EndOfGameActivity : FragmentActivity() {
                 answers[p0.key.toString()] = memberAnswers
             }
             override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("Not yet implemented")
+                // Do nothing?
             }
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
                 TODO("Not yet implemented")
@@ -113,7 +113,7 @@ class EndOfGameActivity : FragmentActivity() {
     private inner class ScreenSlidePagerAdapter(
         fa: FragmentActivity,
         categories: ArrayList<String>,
-        answers: HashMap<String, HashMap<String, String>>,
+        answers: HashMap<String, LinkedHashMap<String, String>>,
         memberID: String,
         memberName: String
     ) : FragmentStateAdapter(fa) {

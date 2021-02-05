@@ -7,18 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class ScreenSlidePageFragment(
     categoryNameInput: String,
-    answersInput: HashMap<String, HashMap<String, String>>,
+    answersInput: HashMap<String, LinkedHashMap<String, String>>,
     memberIDInput: String,
     memberNameInput: String
 ) : Fragment() {
 
     private var categoryName = categoryNameInput
-    private val answers: HashMap<String, HashMap<String, String>> = answersInput
+    private val answers: HashMap<String, LinkedHashMap<String, String>> = answersInput
     private var memberID = memberIDInput
     private var memberName = memberNameInput
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewAdapter: RecyclerView.Adapter<*>
+    private lateinit var recyclerViewLayoutManager: RecyclerView.LayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +33,8 @@ class ScreenSlidePageFragment(
     ): View
     {
         Log.d("PRINTS", "id: ${memberID}, name: ${memberName.toString()}")
-        val myAnswers: HashMap<String, String> = answers[memberID]!!
+        // ALL PRAISE OUR LORD AND SAVIOR LINKEDHASHMAP!
+        val myAnswers: LinkedHashMap<String, String> = (answers[memberID] as LinkedHashMap<String, String>?)!!
         val rootView = inflater.inflate(R.layout.card_category_answers, container, false)
         val categoryNameTextView = rootView.findViewById<TextView>(R.id.category_name_answers)
         val memberNameTextView = rootView.findViewById<TextView>(R.id.member_name_answers)
@@ -37,34 +44,20 @@ class ScreenSlidePageFragment(
         memberNameTextView.text = memberName
         answerTextView.text = myAnswers[categoryName].toString()
 
-//        database.reference.child("rooms").child(roomID).child("members").addChildEventListener(
-//            object : ChildEventListener{
-//                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-////                    val answers = p0.child()
-//
-//                    Log.d("Answers Database Tests", "${p0.child(categoryName).value}}")
-//                }
-//
-//                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-//                    TODO("Not yet implemented")
-//                }
-//
-//                override fun onChildRemoved(p0: DataSnapshot) {
-//                    TODO("Not yet implemented")
-//                }
-//
-//                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-//                    TODO("Not yet implemented")
-//                }
-//
-//                override fun onCancelled(p0: DatabaseError) {
-//                    TODO("Not yet implemented")
-//                }
-//            }
-//        )
+        // Need to pass a *List* of *Hashmaps* so that the adapter can iterate over the list!
+        val answersList: MutableList<LinkedHashMap<String, String>> = mutableListOf()
+        for (key in answers.keys){
+            answersList.add(answers[key]!!)
+        }
 
+        // Regular Recyclerview initiation stuff
+        recyclerViewLayoutManager = LinearLayoutManager(context)
+        recyclerViewAdapter = MemberAnswersRecyclerviewAdapter(answersList)
 
-
+        recyclerView = rootView.findViewById<RecyclerView>(R.id.other_answers_recyclerview).apply{
+            layoutManager = recyclerViewLayoutManager
+            adapter = recyclerViewAdapter
+        }
 
         return rootView
     }
