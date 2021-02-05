@@ -1,9 +1,12 @@
 package com.example.onomazwopragmaproject
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -33,6 +36,8 @@ class EndOfGameActivity : FragmentActivity() {
 
         roomID = intent.getStringExtra("ROOM_ID_EXTRA")!!.toString()
         memberID = intent.getStringExtra("MEMBER_ID_EXTRA")!!.toString()
+
+        val finalResults = findViewById<Button>(R.id.results_button)
 
 
         val membersAnswersChildListener = object : ChildEventListener{
@@ -97,6 +102,10 @@ class EndOfGameActivity : FragmentActivity() {
         // ------------------------------------------------------------------------------------------------------------------
 
 
+        finalResults.setOnClickListener{
+            val intent = Intent(this, FinalResultsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onBackPressed() {

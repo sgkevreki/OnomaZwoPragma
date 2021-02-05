@@ -25,11 +25,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Απαντήσεις"
+        android:text="Απαντήσεις!"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/results_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Τελικά Αποτελέσματα!"
+        tools:layout_editor_absoluteX="164dp"
+        tools:layout_editor_absoluteY="608dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pager"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
