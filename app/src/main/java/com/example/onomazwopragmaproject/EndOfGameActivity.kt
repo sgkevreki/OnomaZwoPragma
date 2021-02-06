@@ -97,14 +97,17 @@ class EndOfGameActivity : FragmentActivity() {
                 viewPager.adapter = pagerAdapter
             }
         }
-        handler.postDelayed(runnable, 2000)
+        handler.postDelayed(runnable, 1000)
         // ------------------------------------------------------------------------------------------------------------------
         // ------------------------------------------------------------------------------------------------------------------
 
 
         finalResults.setOnClickListener{
-            val intent = Intent(this, FinalResultsActivity::class.java)
-            startActivity(intent)
+            val newintent = Intent(this, FinalResultsActivity::class.java)
+            Log.d("MEMBERSLIST", "endofgame: ${intent.getStringArrayListExtra("EXTRA_MEMBERS_LIST")}")
+            val membersList = intent.getStringArrayListExtra("EXTRA_MEMBERS_LIST")
+            newintent.putStringArrayListExtra("EXTRA_MEMBERS_LIST", membersList)
+            startActivity(newintent)
         }
     }
 

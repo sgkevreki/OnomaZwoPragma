@@ -6,9 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
 
 class ScreenSlidePageFragment(
     categoryNameInput: String,
@@ -22,10 +23,6 @@ class ScreenSlidePageFragment(
     private var memberID = memberIDInput
     private var memberName = memberNameInput
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var recyclerViewAdapter: RecyclerView.Adapter<*>
-    private lateinit var recyclerViewLayoutManager: RecyclerView.LayoutManager
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,33 +30,27 @@ class ScreenSlidePageFragment(
     ): View
     {
         Log.d("PRINTS", "id: ${memberID}, name: ${memberName.toString()}")
-        // ALL PRAISE OUR LORD AND SAVIOR LINKEDHASHMAP!
         val myAnswers: LinkedHashMap<String, String> = (answers[memberID] as LinkedHashMap<String, String>?)!!
         val rootView = inflater.inflate(R.layout.card_category_answers, container, false)
         val categoryNameTextView = rootView.findViewById<TextView>(R.id.category_name_answers)
         val memberNameTextView = rootView.findViewById<TextView>(R.id.member_name_answers)
         val answerTextView = rootView.findViewById<TextView>(R.id.answer)
+        val pointsGroup = rootView.findViewById<RadioGroup>(R.id.radioGroup)
+        val defaultButton = rootView.findViewById<RadioButton>(R.id.radio_button_1)
 
         categoryNameTextView.text = categoryName
         memberNameTextView.text = memberName
         answerTextView.text = myAnswers[categoryName].toString()
 
-//        // Need to pass a *List* of *Hashmaps* so that the adapter can iterate over the list!
-//        val answersList: MutableList<LinkedHashMap<String, String>> = mutableListOf()
-//        for (key in answers.keys){
-//            answersList.add(answers[key]!!)
-//        }
-//
-//        // Regular Recyclerview initiation stuff
-//        recyclerViewLayoutManager = LinearLayoutManager(context)
-//        recyclerViewAdapter = MemberAnswersRecyclerviewAdapter(answersList)
-//
-//        recyclerView = rootView.findViewById<RecyclerView>(R.id.other_answers_recyclerview).apply{
-//            layoutManager = recyclerViewLayoutManager
-//            adapter = recyclerViewAdapter
-//        }
+        defaultButton.isChecked = true
+        database.reference.child("rooms").child(roomID).child("members").child(memberID).child("categoryscores").child(categoryName)
+            .setValue(rootView.findViewById<RadioButton>(pointsGroup.checkedRadioButtonId).text.toString().toInt())
+
+        pointsGroup.setOnCheckedChangeListener { _, _ ->
+            database.reference.child("rooms").child(roomID).child("members").child(memberID).child("categoryscores").child(categoryName)
+                .setValue(rootView.findViewById<RadioButton>(pointsGroup.checkedRadioButtonId).text.toString().toInt())
+        }
 
         return rootView
     }
-
 }

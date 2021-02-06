@@ -123,6 +123,9 @@ class RoomActivity : AppCompatActivity() {
                         val intent = Intent(applicationContext, GameActivity::class.java)
                         intent.putExtra("EXTRA_ROOM_ID", roomId)
                         intent.putExtra("EXTRA_MEMBER_ID", memberId)
+                        intent.putStringArrayListExtra("EXTRA_MEMBERS_LIST", membersList as ArrayList<String>)
+                        Log.d("MEMBERSLIST", "room: $membersList")
+
                         Log.d(
                             "ROOM",
                             "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"
@@ -152,6 +155,9 @@ class RoomActivity : AppCompatActivity() {
                 val intent = Intent(this, GameActivity::class.java)
                 intent.putExtra("EXTRA_ROOM_ID", roomId)
                 intent.putExtra("EXTRA_MEMBER_ID", memberId)
+                intent.putStringArrayListExtra("EXTRA_MEMBERS_LIST", membersList as ArrayList<String>)
+                Log.d("MEMBERSLIST", "room: $membersList")
+
                 Log.d(
                     "ROOM",
                     "categories list as arrayList: ${categoriesList as ArrayList<String>?} \n and classic: $categoriesList"

@@ -121,8 +121,11 @@ class GameActivity : AppCompatActivity() {
                         val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
                         uploadAnswers()
                         newIntent.putStringArrayListExtra("CATEGORIES_EXTRA", ArrayList(categories))
+                        newIntent.putStringArrayListExtra("EXTRA_MEMBERS_LIST", intent.getStringArrayListExtra("EXTRA_MEMBERS_LIST"))
+                        Log.d("MEMBERSLIST", "game: ${intent.getStringArrayListExtra("EXTRA_MEMBERS_LIST")}")
                         newIntent.putExtra("MEMBER_ID_EXTRA", memberID.toString())
                         newIntent.putExtra("ROOM_ID_EXTRA", roomID.toString())
+
                         Log.d("CategoriesGameAct", "Categories: $categories, and as ArrayList: ${ArrayList(categories)}")
                         startActivity(newIntent)
                         Log.d("Time is up!", "Did the answers get to the database?")
@@ -137,7 +140,7 @@ class GameActivity : AppCompatActivity() {
         )
         stopButton.setOnClickListener {
 
-            val countDownTimer: CountDownTimer = object : CountDownTimer(10 * 1000, 1000) {
+            val countDownTimer: CountDownTimer = object : CountDownTimer(2 * 1000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     findViewById<TextView>(R.id.timer).text = "${millisUntilFinished / 1000}"
                     database.reference.child("rooms").child(roomID).child("timerisset").setValue(millisUntilFinished / 1000)

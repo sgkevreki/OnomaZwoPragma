@@ -8,8 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.onomazwopragmaproject.GlobalsActivity.Companion.database
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
-class MemberAnswersRecyclerviewAdapter(private val answers: MutableList<LinkedHashMap<String, String>>) : RecyclerView.Adapter<MemberAnswersRecyclerviewAdapter.MyViewHolder>() {
+class MemberAnswersRecyclerviewAdapter(private val members: MutableList<String>) : RecyclerView.Adapter<MemberAnswersRecyclerviewAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var memberImage: ImageView = itemView.findViewById(R.id.member_answer_image)
         internal var memberName: TextView = itemView.findViewById(R.id.member_answer_name)
@@ -22,15 +27,39 @@ class MemberAnswersRecyclerviewAdapter(private val answers: MutableList<LinkedHa
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-//        var myMap = answers[position]
-//        holder.memberName.text = myMap[]
-//        holder.memberNameAnswers.text = answers[myKeys[position]]
-//        holder.memberImage.resources.getDrawable(R.drawable.name_image)
+        var currentMember = members[position]
+        var totalScore = 0
+        var memberScoresListener = object : ChildEventListener{
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                for (category in p0.children){
+                    totalScore += category.value.toString().toInt() // ?
+                }
+                holder.memberNameAnswers.text = totalScore.toString()
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        }
+//        database.reference. ...///
+        // A listener that
     }
 
     override fun getItemCount(): Int {
-        Log.d("RoomAdapter", "getItemCount returns: ${answers.size}")
-        return answers.size
+        Log.d("RoomAdapter", "getItemCount returns: ${members.size}")
+        return members.size
     }
 
 }
