@@ -97,7 +97,7 @@ class EndOfGameActivity : FragmentActivity() {
                 viewPager.adapter = pagerAdapter
             }
         }
-        handler.postDelayed(runnable, 1000)
+        handler.postDelayed(runnable, 3000)
         // ------------------------------------------------------------------------------------------------------------------
         // ------------------------------------------------------------------------------------------------------------------
 

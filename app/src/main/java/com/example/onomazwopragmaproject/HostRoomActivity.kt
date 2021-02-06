@@ -23,7 +23,7 @@ class HostRoomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_host_room)
 
-        val userCategory1 = findViewById<EditText>(R.id.category1).text.toString()
+        val userCategory1EditText = findViewById<EditText>(R.id.category1)
 //        val userCategory2 = findViewById<EditText>(R.id.category2).text.toString()
 //        val userCategory3 = findViewById<EditText>(R.id.category3).text.toString()
 //        val userCategory4 = findViewById<EditText>(R.id.category4).text.toString()
@@ -44,8 +44,7 @@ class HostRoomActivity : AppCompatActivity() {
         clickListenerPlant()
 
         //The users also get to add their own categories!
-//        categoriesList2.add(userCategory1)
-//        Log.d("MY LIST", "${categoriesList2.toString()}")
+
 
 
         roomButton.setOnClickListener {
@@ -64,6 +63,8 @@ class HostRoomActivity : AppCompatActivity() {
                 intent.putExtra("activity", "host");
                 intent.putExtra("EXTRA_ROOM_ID", roomId)
                 intent.putExtra("EXTRA_MEMBER_ID", hostUser.memberId)
+//                categoriesList2.add(userCategory1EditText.text.toString())
+//                Log.d("MY LIST", "${categoriesList2.toString()}")
 
                 intent.putExtra("categoriesList2",ArrayList(categoriesList2))
 

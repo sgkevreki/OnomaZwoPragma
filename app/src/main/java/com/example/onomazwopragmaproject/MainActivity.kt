@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.plattysoft.leonids.ParticleSystem
@@ -21,6 +22,21 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, HostOrJoinRoomActivity::class.java)
             startActivity(intent)
         }
+
+        val instructionsButton = findViewById<ImageView>(R.id.instructions_button)
+        instructionsButton.setOnClickListener {
+            val intent = Intent(this, InstructionsActivity::class.java)
+            startActivity(intent)
+        }
+
+        val exitButton = findViewById<ImageView>(R.id.exit_button)
+        exitButton.setOnClickListener {
+//            val homeIntent = Intent(Intent.ACTION_MAIN)
+//            homeIntent.addCategory(Intent.CATEGORY_HOME)
+//            homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//            startActivity(homeIntent)
+        }
+
 
 
         val rootView = findViewById<ConstraintLayout>(R.id.root_constraint_layout)
@@ -41,11 +57,11 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         x = -40
                         y = (0..rootView.height).random()
-                        }
+                    }
                     1 -> {
                         x = (0..rootView.width).random()
                         y = -40
-                        }
+                    }
                     2 -> {
                         x = rootView.width + 40
                         y = (0..rootView.height).random()

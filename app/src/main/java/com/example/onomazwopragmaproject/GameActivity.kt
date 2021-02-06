@@ -85,6 +85,9 @@ class GameActivity : AppCompatActivity() {
             categories_background.add(resources.getDrawable(R.drawable.plant_background))
         }
 
+//        categories_image.add(resources.getDrawable(R.drawable.thing_image))
+//        categories_background.add(resources.getDrawable(R.drawable.thing_background))
+
 
         // Create the objects needed
         // Create a Linear Layout Manager
@@ -113,7 +116,6 @@ class GameActivity : AppCompatActivity() {
                     if (p0.value != null) {
                         stopButton.setOnClickListener(null)
                         findViewById<TextView>(R.id.timer).text = p0.value.toString()
-
                     }
                     if (p0.value.toString() == "0"){
                         Log.d("INSIDE LISTENER", "in the 'stop pressed' listener")
@@ -129,6 +131,10 @@ class GameActivity : AppCompatActivity() {
                         Log.d("CategoriesGameAct", "Categories: $categories, and as ArrayList: ${ArrayList(categories)}")
                         startActivity(newIntent)
                         Log.d("Time is up!", "Did the answers get to the database?")
+//                        // Emptying these for the next time the activity runs
+//                        categories = mutableListOf()
+//                        categories_image = mutableListOf()
+//                        categories_background = mutableListOf()
                     }
                     Log.d("TESTSTS", "p0.value: ${p0.value}")
                 }
@@ -140,14 +146,14 @@ class GameActivity : AppCompatActivity() {
         )
         stopButton.setOnClickListener {
 
-            val countDownTimer: CountDownTimer = object : CountDownTimer(2 * 1000, 1000) {
+            val countDownTimer: CountDownTimer = object : CountDownTimer(10 * 1000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     findViewById<TextView>(R.id.timer).text = "${millisUntilFinished / 1000}"
                     database.reference.child("rooms").child(roomID).child("timerisset").setValue(millisUntilFinished / 1000)
                 }
 
                 override fun onFinish() {
-                    findViewById<TextView>(R.id.timer).text = "Done!"
+                    findViewById<TextView>(R.id.timer).text = "0"
 //                    val newIntent = Intent(this@GameActivity, EndOfGameActivity::class.java)
 //                    uploadAnswers()
 //                    newIntent.putStringArrayListExtra("CATEGORIES_EXTRA", ArrayList(categories))
@@ -204,7 +210,13 @@ class GameActivity : AppCompatActivity() {
                     // then app will close
                     database.reference.child("rooms").child(roomID).child("members")
                         .child(memberID).removeValue()
-                    var intent = Intent(this, MainActivity::class.java)
+
+                    // Deleting the local variables for the next time the activity runs
+                    categories = mutableListOf()
+                    categories_background = mutableListOf()
+                    categories_image = mutableListOf()
+
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 })
 

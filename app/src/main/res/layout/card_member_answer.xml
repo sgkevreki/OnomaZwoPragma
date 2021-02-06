@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:text="TextView"
+            android:text="Answer"
             app:layout_constraintStart_toEndOf="@+id/member_answer_name"
             app:layout_constraintTop_toTopOf="@+id/member_answer_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
